@@ -108,19 +108,40 @@ CRUD特性：而对于时序数据库而言，也会有一些CRUD的特性[增�
 
 ### InfluxDB  VS OpenTSDB
 
-[Graphite+InfluxDB+OpenTSDB+Prometheus](<https://db-engines.com/en/system/Graphite%3BInfluxDB%3BOpenTSDB%3BPrometheus>)
+在没有深入研究InfluxDB和OpenTSDB之前, 罗列他们之间的区别意义并不大，因为我们无法去理解自己不熟悉的内容；
+
+下面仅将DB-Engine中的对比链接给出，待彻底研究透彻实现原理，以及实际使用后再回来看他们之间的区别，我想那时一定别有一番体会。
+
+* [Graphite+InfluxDB+OpenTSDB+Prometheus](<https://db-engines.com/en/system/Graphite%3BInfluxDB%3BOpenTSDB%3BPrometheus>)
+
+|区别|Graphite|OpenTSDB|InfluxDB|Prometheus|
+|:--|:--|:--|:--|:--|
+|初始发行|2008|2011|2013|2016|
+|排名（2019.04）|3|6|1|4|
+|版权|开源|开源|单节点开源|开源|
+|开发人员|Chris Davis[谷歌]|[思科雅虎等](https://github.com/orgs/OpenTSDB/people)|influxdata公司|[Cloud Native Computing Foundation](https://cncf.io/)|
+|开发语言|Python|Java|Go|Go|
+|用户|[豆瓣](http://www.douban.com/)|[robinhood](https://www.robinhood.com/)|[IBM Trusteer](https://www.influxdata.com/customer/ibm/)|[DigitalOcean](https://www.digitalocean.com/)|
+|OS|Linux/Unix|Linux/Windows|Linux/OS X|Linux/Windows|
+|数据类型|Num|Num/String|Num/String|Num|
+|SQL|no|no|InfluxQL|PromQL|
+
+
+
+Chris Davis（Graphite）：Chris是一名软件顾问和Google工程师，他一直致力于设计和构建可扩展的监控和自动化工具超过12年。克里斯最初于2006年创建了Graphite，并从此领导了开源项目。当他不写代码时，他喜欢烹饪，制作音乐和做研究。他的研究兴趣包括知识建模，群论，信息论，混沌理论和复杂系统。
+
 
 ## 实践总结
 
 ### 1. 访问D_ENGINE网站了解最新的时序数据库排名情况
 
-[time+series+dbms ranking](https://db-engines.com/en/ranking/time+series+dbms)
+* [time+series+dbms ranking](https://db-engines.com/en/ranking/time+series+dbms)
 
 ### 2. 访问GitHub了解排名第一的InfluxDB
 
-[influxdata](https://github.com/influxdata)
-[influxdb](https://github.com/influxdata/influxdb)
-[Telegraf playground](https://rootnroll.com/d/telegraf/)
+* [influxdata](https://github.com/influxdata)
+* [influxdb](https://github.com/influxdata/influxdb)
+* [Telegraf playground](https://rootnroll.com/d/telegraf/)
 
 ```bash
 Linux ab08c314c679 4.14.81-coreos x86_64                                   
