@@ -32,7 +32,7 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 ### 了解Hadoop的起源
 
-[Hadoop的起源](https://github.com/BoobooWei/booboo_hadoop/blob/master/01_theory01_Introduction%20to%20the%20origin%20and%20system%20of%20hadoop.md)
+[Hadoop的起源](https://github.com/BoobooWei/booboo_hadoop/blob/master/01_theory/01_Introduction%20to%20the%20origin%20and%20system%20of%20hadoop.md)
 
 ### 理解HDFS的原理
 
