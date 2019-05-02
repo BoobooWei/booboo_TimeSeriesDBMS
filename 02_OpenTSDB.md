@@ -26,13 +26,29 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 因此在学习OpenTSDB之前，需要先将以上知识点理解清楚。
 
-### 阅读Google的Bigtable论文
 
-[Google的Bigtable论文](https://ai.google/research/pubs/pub27898)
 
 ### 了解Hadoop的起源
 
 [Hadoop的起源](https://github.com/BoobooWei/booboo_hadoop/blob/master/01_theory/01_Introduction%20to%20the%20origin%20and%20system%20of%20hadoop.md)
+
+![](pic/006.png)
+
+
+
+#### 阅读Google的相关论文
+
+- [2003@ai.google@The Google File System](https://ai.google/research/pubs/pub51)
+- [2004@www.usenix.org@MapReduce: Simplified Data Processing on Large Clusters](https://www.usenix.org/legacy/events/osdi04/tech/full_papers/dean/dean.pdf)--
+- [2004@ai.google@MapReduce: Simplified Data Processing on Large Clusters](https://ai.google/research/pubs/pub62)
+- [2006@www.usenix.org@Bigtable: A Distributed Storage System for Structured Data](https://www.usenix.org/legacy/event/osdi06/tech/chang/chang_html/index.html)
+- [2010@ai.google@MapReduce/Bigtable for Distributed Optimization](https://ai.google/research/pubs/pub36948)
+
+国内中文翻译参考：
+
+* [Google-GFS 中文](hadoop_pdf/Google/Google-File-System中文版_1.0.pdf)
+* [Google-MapReduce 中文](hadoop_pdf/Google/Google-MapReduce中文版_1.0.pdf)
+* [Google-Bigtable 中文](hadoop_pdf/Google/Google-Bigtable中文版_1.0.pdf)
 
 ### 理解HDFS的原理
 
@@ -41,3 +57,4 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 ### 理解HBase的原理
 
 [HBase的原理](https://hbase.apache.org/)
+
