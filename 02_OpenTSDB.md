@@ -2,6 +2,10 @@
 
 - [OpenTSDB](#opentsdb)
 	- [开始之前](#开始之前)
+		- [了解Hadoop的起源](#了解hadoop的起源)
+		- [阅读Google的相关论文](#阅读google的相关论文)
+		- [理解HDFS的原理](#理解hdfs的原理)
+		- [理解HBase的原理](#理解hbase的原理)
 
 <!-- /TOC -->
 # OpenTSDB
@@ -16,15 +20,15 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 正如Bigtable利用Google文件系统提供的分布式数据存储一样，Apache HBase在Hadoop和HDFS之上提供类似Bigtable的功能。
 
-从上述关系中，我们可以梳理出以下知识点：
+从上述关系中，我们可以梳理出以下关键字：
 
-* [Google的Bigtable](https://ai.google/research/pubs/pub27898)
-* [Hadoop的起源](https://github.com/BoobooWei/booboo_hadoop/blob/master/01_theory/01_Introduction%20to%20the%20origin%20and%20system%20of%20hadoop.md)
-* [HDFS的原理](http://hadoop.apache.org/)
-* [HBase的原理](https://hbase.apache.org/)
+* Google
+* Hadoop
+* BigTable
+* HBase
 
 
-因此在学习OpenTSDB之前，需要先将以上知识点理解清楚。
+因此在学习OpenTSDB之前，需要先将以上关键字理解清楚。
 
 
 
@@ -36,7 +40,7 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 
 
-#### 阅读Google的相关论文
+### 阅读Google的相关论文
 
 - [2003@ai.google@The Google File System](https://ai.google/research/pubs/pub51)
 - [2004@www.usenix.org@MapReduce: Simplified Data Processing on Large Clusters](https://www.usenix.org/legacy/events/osdi04/tech/full_papers/dean/dean.pdf)--
@@ -57,4 +61,3 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 ### 理解HBase的原理
 
 [HBase的原理](https://hbase.apache.org/)
-
