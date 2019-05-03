@@ -79,4 +79,8 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 ![](pic/008_fs_hbase.jpeg)
 
+## HBase初体验
+
+[hbase-2.1.4安装和使用](https://github.com/BoobooWei/booboo_hadoop/blob/master/02_operation/hbaseInstall.md)
+
 ## OpenTSDB初体验
