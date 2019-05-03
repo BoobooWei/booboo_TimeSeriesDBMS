@@ -6,6 +6,8 @@
 		- [阅读Google的相关论文](#阅读google的相关论文)
 		- [理解HDFS的原理](#理解hdfs的原理)
 		- [理解HBase的原理](#理解hbase的原理)
+		- [我的理解](#我的理解)
+	- [OpenTSDB初体验](#opentsdb初体验)
 
 <!-- /TOC -->
 # OpenTSDB
@@ -40,7 +42,7 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 从Google、Hadoop、TSDB这三条时间线中，不难发现时序数据库与他们之间的关系。
 
-![](pic/007.png)
+![](pic/007.jpeg)
 
 
 ### 阅读Google的相关论文
@@ -64,3 +66,17 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 ### 理解HBase的原理
 
 [HBase的原理](https://hbase.apache.org/)
+
+### 我的理解
+
+此处没有必要去将每一个技术都深入学习，在阅读文献的基础上，能够理解这些技术应用的场景和实现原理即可。因为理解这些技术的目的是为了学习时序数据库。
+
+下图是我个人对HDFS、HBase从底层文件角度的关系理解：
+
+![](pic/008_fs_mysql.jpeg)
+
+![](pic/008_fs_hdfs.jpeg)
+
+![](pic/008_fs_hbase.jpeg)
+
+## OpenTSDB初体验
