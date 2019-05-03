@@ -38,6 +38,9 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 ![](pic/006.png)
 
+从Google、Hadoop、TSDB这三条时间线中，不难发现时序数据库与他们之间的关系。
+
+![](pic/007.png)
 
 
 ### 阅读Google的相关论文
