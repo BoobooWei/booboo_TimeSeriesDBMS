@@ -7,7 +7,23 @@
 		- [理解HDFS的原理](#理解hdfs的原理)
 		- [理解HBase的原理](#理解hbase的原理)
 		- [我的理解](#我的理解)
+	- [HBase初体验](#hbase初体验)
 	- [OpenTSDB初体验](#opentsdb初体验)
+		- [1.  安装Hbase](#1-安装hbase)
+		- [2. 下载opentsdb](#2-下载opentsdb)
+		- [3. 安装opentsdb](#3-安装opentsdb)
+		- [4. Hbase中执行初始化脚本](#4-hbase中执行初始化脚本)
+		- [5. 修改配置文件`/etc/opentsdb/opentsdb.conf`](#5-修改配置文件etcopentsdbopentsdbconf)
+		- [6. 启动tsd:](#6-启动tsd)
+		- [7. 访问TSD的网页](#7-访问tsd的网页)
+		- [8. 安装tcollector](#8-安装tcollector)
+		- [9. 修改opentsdb配置文件自动创建uid的功能](#9-修改opentsdb配置文件自动创建uid的功能)
+		- [10. 重新启动tsd](#10-重新启动tsd)
+		- [11. 启动tcollector](#11-启动tcollector)
+		- [12. 使用OpenTSDB的UI查询`iostat.disk.await`](#12-使用opentsdb的ui查询iostatdiskawait)
+		- [13. 进入HBase查看OpenTSDB创建的表明细](#13-进入hbase查看opentsdb创建的表明细)
+		- [14. 关闭测试环境](#14-关闭测试环境)
+	- [Bash脚本自动安装hbase_opentsdb_tcollector](#bash脚本自动安装hbaseopentsdbtcollector)
 
 <!-- /TOC -->
 # OpenTSDB
@@ -402,6 +418,6 @@ root      4216  4196  0 00:19 pts/10   00:00:00 grep tsd
 stopping hbase...........
 ```
 
-## 完成hbase_opentsdb_tcollector安装测试使用
+## Bash脚本自动安装hbase_opentsdb_tcollector
 
 [Bash脚本自动安装链接](scripts/auto_install_hbase_opentsdb_tcollector.sh)
