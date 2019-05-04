@@ -265,7 +265,7 @@ root       732 31176  0 23:12 pts/0    00:00:04 java -enableassertions -enablesy
 
 ### 7. 访问TSD的网页
 
-访问 [http://127.0.0.1:4242](http://127.0.0.1:4242/) 
+访问 [http://127.0.0.1:4242](http://127.0.0.1:4242/)
 
 ![](pic/010.jpg)
 
@@ -312,7 +312,7 @@ root      1890  1671  0 23:50 pts/7    00:00:00 grep open
 -rwxr-xr-x 1 root root 2554 5月   3 23:37 /alidata/install/tcollector/tcollector
 [root@db tcollector]# /alidata/install/tcollector/tcollector start -H localhost -p 4242
 Starting /alidata/install/tcollector/tcollector.py
-[root@db tcollector]# tailf /var/log/tcollector.log 
+[root@db tcollector]# tailf /var/log/tcollector.log
 2019-05-03 23:53:28,275 tcollector[2052] WARNING: collector zabbix_bridge_cache.py terminated after 16 seconds with status code 1, marking dead
 2019-05-03 23:53:28,275 tcollector[2052] INFO: removing postgresql.py from the list of collectors (by request)
 2019-05-03 23:53:28,275 tcollector[2052] WARNING: collector zabbix_bridge.py terminated after 16 seconds with status code 1, marking dead
@@ -362,7 +362,7 @@ Use "exit" to quit this interactive shell.
 For Reference, please visit: http://hbase.apache.org/2.0/book.html#shell
 Version 2.1.4, r5b7722f8551bca783adb36a920ca77e417ca99d1, Tue Mar 19 19:05:06 UTC 2019
 Took 0.0040 seconds
-hbase(main):014:0> list_namespace_tables 'default' 
+hbase(main):014:0> list_namespace_tables 'default'
 TABLE
 tsdb
 tsdb-meta
@@ -402,3 +402,6 @@ root      4216  4196  0 00:19 pts/10   00:00:00 grep tsd
 stopping hbase...........
 ```
 
+## 完成hbase_opentsdb_tcollector安装测试使用
+
+[Bash脚本自动安装链接](scripts/auto_install_hbase_opentsdb_tcollector.sh)
