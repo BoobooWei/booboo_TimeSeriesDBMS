@@ -422,13 +422,20 @@ telegraf默认只搜集系统基础指标，如果要搜集其他指标，可根
 [1] 7397
 ```
 
-启动InfluxDB后，访问[localhost：9999](http://localhost:9999/)，单击开始进行账户配置。
+启动InfluxDB后，访问[localhost：9999](http://localhost:9999/)，单击开始进行账户配置`admin/Aadmin123`。
 
-> 2.0版本和1.7版本的变化非常大，2019年5月4日influxdata官网正在维护更新，2.0直接在web界面操作所有产品，很像wavefront。
+> 2.0版本和1.7版本的变化非常大，2019年5月4日influxdata官网正在维护更新，2.0直接在web界面操作所有产品，很像wavefront；目前在Alpha中，InfluxDB 2将influxdb chronograf kapacitor放在在单个二进制文件中。
 
 ![](pic/013.jpg)
 
-### 2. 安装telegraf chronograf kapacitor
+### 2. 安装telegraf
+
+> 默认只开启操作系统信息采集
+
+```shell
+yum install -y telegraf
+service telegraf start
+```
 
 ### 3. 查询数据
 
