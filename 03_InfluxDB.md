@@ -424,7 +424,7 @@ telegraf默认只搜集系统基础指标，如果要搜集其他指标，可根
 
 启动InfluxDB后，访问[localhost：9999](http://localhost:9999/)，单击开始进行账户配置`admin/Aadmin123`。
 
-> 2.0版本和1.7版本的变化非常大，2019年5月4日influxdata官网正在维护更新，2.0直接在web界面操作所有产品，很像wavefront；目前在Alpha中，InfluxDB 2将influxdb chronograf kapacitor放在在单个二进制文件中。
+> 2.0版本和1.7版本的变化非常大，2019年5月1日～4日influxdata官网正在维护更新[v2.0.0-alpha.9](https://v2.docs.influxdata.com/v2.0/reference/release-notes/#v2-0-0-alpha-9-2019-05-01)，2.0直接在web界面操作所有产品，很像wavefront；目前在Alpha中，InfluxDB 2将influxdb chronograf kapacitor放在在单个二进制文件中。
 
 ![](pic/013.jpg)
 
@@ -439,12 +439,47 @@ service telegraf start
 
 ### 3. 查询数据
 
+脚本模式
+
+![](pic/018.jpg)
+
+```sql
+from(bucket: "zhuyun_test")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r.cpu == "cpu-total")
+  |> filter(fn: (r) => r._field == "usage_user")
+  |> filter(fn: (r) => r._measurement == "cpu")
+  |> filter(fn: (r) => r.host == "db")
+```
+
+图像化模式
+
+![](pic/017.jpg)
+
 ### 4. 可视化数据
+
+![](pic/016.jpg)
 
 ### 5. 处理数据
 
+[从数据资源管理器中创建任务](https://v2.docs.influxdata.com/v2.0/process-data/manage-tasks/create-task/#create-a-task-from-the-data-explorer)
+
+![](pic/019.jpg)
+
+查看任务代码
+
+![](pic/021.png)
+
+![](pic/020.png)
+
 ### 6. 管理组织
+
+待补充
 
 ### 7. 管理用户
 
+待补充
+
 ### 8. 安全和授权
+
+待补充
