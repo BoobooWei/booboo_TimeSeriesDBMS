@@ -353,6 +353,8 @@ test
 
 [influxdata doc](https://v2.docs.influxdata.com/v2.0/get-started/)
 
+[infludb2.0介绍](https://www.influxdata.com/products/influxdb-overview/influxdb-2-0/)
+
 ### TICK简介
 
 ![](pic/012.png)
@@ -416,13 +418,13 @@ telegraf默认只搜集系统基础指标，如果要搜集其他指标，可根
 
 ```shell
 [root@db ~]# wget https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.9_linux_amd64.tar.gz
-[root@db ~]# wgettar xvzf path/to/influxdb_2.0.0-alpha.9_linux_amd64.tar.gz
+[root@db ~]# tar xvzf path/to/influxdb_2.0.0-alpha.9_linux_amd64.tar.gz
 [root@db ~]# cp influxdb_2.0.0-alpha.9_linux_amd64/{influx,influxd} /usr/local/bin/
 [root@db ~]# influxd --reporting-disabled &
 [1] 7397
 ```
 
-启动InfluxDB后，访问[localhost：9999](http://localhost:9999/)，单击开始进行账户配置`admin/Aadmin123`。
+启动InfluxDB后，访问[demo]([http://101.132.37.118:9999](http://101.132.37.118:9999/))，单击开始进行账户配置`admin/Admin123`。
 
 > 2.0版本和1.7版本的变化非常大，2019年5月1日～4日influxdata官网正在维护更新[v2.0.0-alpha.9](https://v2.docs.influxdata.com/v2.0/reference/release-notes/#v2-0-0-alpha-9-2019-05-01)，2.0直接在web界面操作所有产品，很像wavefront；目前在Alpha中，InfluxDB 2将influxdb chronograf kapacitor放在在单个二进制文件中。
 
@@ -434,7 +436,25 @@ telegraf默认只搜集系统基础指标，如果要搜集其他指标，可根
 
 ```shell
 yum install -y telegraf
-service telegraf start
+```
+
+登录influxdb2.0界面选择“设置Settings”中的“telegraf”界面，选择“createconfigration”。
+
+![](pic/024.png)
+
+查看配置明细
+
+![](pic/023.png)
+
+查看启动telegraf的步骤和命令
+
+![](pic/022.png)
+
+telegraf的配置文件是在web中进行管理，创建好后，本地的telegraf通过远程访问配置来启动服务
+
+```
+export INFLUX_TOKEN=6cl933dkax36vEuCPSU6WVIL4nkKsp4WZ8SuFahQUBbUbR8h_n0bktZAUClpgObcxzBvmDnXKTLo4G5V6m-_3w==
+telegraf --config http://101.132.37.118:9999/api/v2/telegrafs/03cd7af520a78000 &
 ```
 
 ### 3. 查询数据
@@ -483,3 +503,5 @@ from(bucket: "zhuyun_test")
 ### 8. 安全和授权
 
 待补充
+
+## 

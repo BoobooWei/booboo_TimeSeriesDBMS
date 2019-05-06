@@ -5,8 +5,11 @@
 # 20190504
 # redhat/centos 6/7
 
-install_dir=/booboo
-
+install_dir=/alidata/install/
+if [ ! -d "${install_dir}" ]
+then
+  mkdir ${install_dir}
+fi
 #===================================step1:install hbase========================
 # install java
 yum install -y java-1.8.0-openjdk.x86_64
