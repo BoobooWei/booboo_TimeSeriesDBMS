@@ -24,6 +24,23 @@
 		- [13. 进入HBase查看OpenTSDB创建的表明细](#13-进入hbase查看opentsdb创建的表明细)
 		- [14. 关闭测试环境](#14-关闭测试环境)
 	- [Bash脚本自动安装hbase_opentsdb_tcollector](#bash脚本自动安装hbaseopentsdbtcollector)
+	- [OpenTSDB(HBase)时序数据存储模型](#opentsdbhbase时序数据存储模型)
+		- [时序数据基本概念](#时序数据基本概念)
+			- [datasource(tag)](#datasourcetag)
+			- [metric](#metric)
+			- [timestamp](#timestamp)
+			- [时序数据表举例](#时序数据表举例)
+		- [底层存储模型](#底层存储模型)
+			- [RowKey规则](#rowkey规则)
+			- [OpenTSDB存储设计的问题](#opentsdb存储设计的问题)
+				- [问题一：存在很多无用的字段](#问题一存在很多无用的字段)
+				- [问题二：数据源和采集指标冗余](#问题二数据源和采集指标冗余)
+				- [问题三：无法有效的压缩](#问题三无法有效的压缩)
+				- [问题四：不能完全保证多维查询能力](#问题四不能完全保证多维查询能力)
+			- [OpenTSDB对存储模型的优化](#opentsdb对存储模型的优化)
+				- [优化一_时间戳优化](#优化一时间戳优化)
+				- [优化二_全局编码](#优化二全局编码)
+	- [OpenTSDB体系结构](#opentsdb体系结构)
 
 <!-- /TOC -->
 # OpenTSDB
@@ -421,3 +438,223 @@ stopping hbase...........
 ## Bash脚本自动安装hbase_opentsdb_tcollector
 
 [Bash脚本自动安装链接](scripts/auto_install_hbase_opentsdb_tcollector.sh)
+
+## OpenTSDB(HBase)时序数据存储模型
+
+### 时序数据基本概念
+
+[Data Specification doc](http://opentsdb.net/docs/build/html/user_guide/writing/index.html)
+
+* **逻辑**：一个时序数据点（point）由`datasource(tags)`+`metric`+`timestamp`这三部分唯一确定
+* **物理**：不同的时序数据库有不同的存储方法
+
+#### datasource(tag)
+
+数据源由一系列的标签（tag，也称为维度）唯一表示;
+
+**datasource举例说明**
+
+例如数据源是一个“服务器4数据源”，这个数据源由
+
+* RegionId 地域
+* HostName 主机名
+* IpAddress ip地址
+
+三个维度值唯一表示。
+
+|RegionId|HostName|cpu|
+|:--|:--|:--|
+|cn-shanghai|web-01|cpu-total|
+|cn-shanghai|web-01|cpu-0|
+|cn-shanghai|web-01|cpu-1|
+|cn-shanghai|web-02|cpu-total|
+|cn-shanghai|web-02|cpu-0|
+|cn-shanghai|web-02|cpu-1|
+|cn-hangzhou|web-03|cpu-total|
+|cn-hangzhou|web-03|cpu-0|
+|cn-hangzhou|web-03|cpu-1|
+|cn-hangzhou|web-04|cpu-total|
+|cn-hangzhou|web-04|cpu-0|
+|cn-hangzhou|web-04|cpu-1|
+
+OpenTSDB的tag限制:
+
+```shell
+1. 最多为8个;
+2. 不允许有空格;
+3. 只有允许使用以下字符：a到z，A到Z，0到9，-，_，.，/或Unicode字母（按照规范）
+4. 标签的长度不受限制，但应该尽量保持这些值非常短。
+```
+
+**思考题-为什么时序数据库要限制tag的数量呢**
+
+根据表中的tag，我们来计算一下`series cardinality`序列基数：
+
+`ReginIds` * `HostNames` * `IpAddress` = `series cardinality`
+
+$$
+2 * 4 * 3 = 24
+$$
+
+包含高度可变信息（如UUID，哈希值和随机字符串）的标签将导致数据库中出现大量序列，通俗地称为**高系列基数**。高系列基数是许多数据库工作负载的高内存使用率的主要原因之一。
+
+
+#### metric
+
+指标名称 例如关系型数据中的表
+例如：sys.cpu.user
+
+#### timestamp
+
+支持人类可读的绝对时间戳或Unix风格的整型格式。相对时间通常用来刷新仪表板。
+
+虽然OpenTSDB可以以毫秒分辨率（精度）存储数据，但大多数查询将以秒级分辨率返回数据，以提供对现有工具的向后兼容性。除非使用指定了降采样算法的查询，否则将使用查询中指定的相同聚合函数将数据自动降采样到1秒。这样，如果多个数据点存储在一个给定的秒数，它们将被聚合并正确返回一个正常的查询。
+
+#### 时序数据表举例
+
+从逻辑上查看到的数据如下：
+
+|metric|timestamp|value|tag|||
+|:--|:--|:--|:--|:--|:--|
+|指标名|时间戳|值|地域|主机名|cpu编号|
+|sys.cpu.user|1557142276|88.76|cn-shanghai|web-01|cpu-total|
+|sys.cpu.user|1557142276|88.76|cn-shanghai|web-01|cpu-0|
+|sys.cpu.user|1557142276|88.76|cn-shanghai|web-01|cpu-1|
+
+思考：物理上又是如何存储的呢？
+
+### 底层存储模型
+
+#### RowKey规则
+
+OpenTSDB基于HBase存储时序数据，在HBase层面设计 RowKey 规则为：
+
+`metric+timestamp+datasource(tags)`
+
+HBase是一个KV数据库，一个时序数据(point)如果以KV的形式表示，那么其中的`V`必然是`point`的具体数值，而K就自然而然是唯一确定`point`数值的`datasource+metric+timestamp`;表的数据组织方式是按照RowKey的字典序顺序排列的.
+
+既然HBase中`K`是由`datasource、metric以及timestamp`三者构成，现在我们可以简单认为`RowKey`就为这三者的组合。
+
+```json
+{
+	"region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142276" : 88.67,
+	"region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142278" : 87,22
+}
+```
+**思考：这三者的组合顺序是怎么样的呢？**
+
+> 1. 首先来看哪个应该排在首位?
+
+为了将**同一种指标**的所有数据集中放在一起，HBase将metric放在了rowkey的最前面。
+
+- 如果将timestamp放在最前面，同一时刻的数据必然会写入同一个数据分片，无法起到散列的效果；
+- 而如果将datasource（即tags）放在最前面的话，这里有个更大的问题，就是datasource本身由多个标签组成，如果用户指定其中部分标签查找，而且不是前缀标签的话，在HBase里面将会变成大范围的扫描过滤查询，查询效率非常之低。
+
+举个上面的例子，如果将datasource放在最前面，那rowkey就可以表示为`region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142276000`，此时用户想查找`1557142276000`这个时间点`cpu`为`cpu-01`的所有`sys.cpu.user`的值，即只根据`cpu=cpu-01`这样一个维度信息查找指定时间点的某个指标，而且这个维度不是前缀维度，就会扫描大量的记录进行过滤。
+
+> 2. 确定了metric放在最前面之后，再来看看接下来应该将datasource放在中间呢还是应该将timestamp放在中间？
+
+将metric放在前面已经可以解决请求均匀分布（散列）的要求，因此HBase将timestamp放在中间，将datasource放在最后。
+
+- 试想，如果将datasource放在中间，也会遇到上文中说到的后缀维度查找的问题。
+
+因此，OpenTSDB中 RowKey 的设计为：`metric+timestamp+datasource`，在HBase中只需要设置一个columnfamily和一个column。
+
+```sql
+create 'tsdb',
+  {NAME => 't', VERSIONS => 1, COMPRESSION => 'NONE', BLOOMFILTER => 'ROW', DATA_BLOCK_ENCODING => 'DIFF', TTL => 'FOREVER'}
+put 'tsdb', RowKey, 't:[子列]', value
+```
+
+现在再来看这张tsdb表，只有一个列族为`t`。
+
+> 问题：子列是怎么定义的呢？
+
+子列名 = 时间戳-将小时截取时间戳之后的秒数
+
+#### OpenTSDB存储设计的问题
+
+OpenTSDB的这种设计有什么问题呢？在了解设计问题之前需要简单看看HBase在文件中存储KV的方式，即一系列时序数据在文件、内存中的存储方式，如下图所示：
+
+![](pic/025.png)
+
+从途中可以看到一个KeyValue的数据结构由以下四个部分组成：
+
+|key length|value length|key|value|
+|:--|:--|:--|:--|
+|key长度|value长度|key明细|value值|
+
+key的数据结构由以下7个部分组成：
+
+|rowkey length|rowkey|columnfamily length|columnFamily|columnQualifier|TimeStamp|KeyType|
+|:--|:--|:--|:--|:--|:--|:--|
+|rowkey长度|rowkey值|列族长度|列族值|子列值|时间戳|key类型|
+
+
+
+##### 问题一：存在很多无用的字段
+
+一个`Key`的数据结构中只有`rowkey length`和`rowkey`是有用的，其他字段诸如`columnfamily`、`column`、`timestamp`以及`keytype`从理论上来讲都没有任何实际意义，但在HBase的存储体系里都必须存在，因而耗费了很大的存储成本。
+
+
+##### 问题二：数据源和采集指标冗余
+
+`Key`数据结构中的`rowkey`等于`metric+timestamp+datasource`，试想同一个数据源的同一个采集指标，随着时间的流逝不断吐出采集数据，这些数据理论上共用同一个数据源(datasource)和采集指标(metric)，但在HBase的这套存储体系下，共用是无法体现的，因此存在大量的数据冗余，主要是数据源冗余以及采集指标冗余。
+
+```json
+{
+	"region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142276" : 88.67,
+	"region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142277" : 87.22,
+	"region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142278" : 87.21,
+	此处神略...1万行
+}
+```
+
+
+##### 问题三：无法有效的压缩
+
+HBase提供了块级别的压缩算法－snappy、gzip等，这些通用压缩算法并没有针对时序数据进行设置，压缩效率比较低。HBase同样提供了一些编码算法，比如FastDiff等等，可以起到一定的压缩效果，但是效果并不佳。效果不佳的主要原因是HBase没有数据类型的概念，没有schema的概念，不能针对特定数据类型进行特定编码，只能选择通用的编码，效果可想而知。
+
+
+##### 问题四：不能完全保证多维查询能力
+
+HBase本身没有schema，目前没有实现倒排索引机制，所有查询必须指定metric、timestamp以及完整的tags或者前缀tags进行查询，对于后缀维度查询也勉为其难。
+
+
+#### OpenTSDB对存储模型的优化
+
+
+##### 优化一_时间戳优化
+
+timestamp并不是想象中细粒度到秒级或毫秒级，而是精确到小时级别，然后将小时中每一秒设置到列上。这样一行就会有3600列，每一列表示一小时的一秒。这样设置据说可以有效的取出一小时整的数据。
+
+1. 1557142276 是 北京时间 2019/5/6 19:31:16；
+2. 截取到小时为北京时间 2019/5/6 19:00:00
+3. 转换为时间戳为 1557140400
+4. 1557142276 - 1557140400 = 2276
+
+子列名 = 时间戳-将小时截取时间戳之后的秒数
+
+##### 优化二_全局编码
+
+所有metrics以及所有标签信息（tags）都使用了全局编码将标签值编码成更短的bit，减少rowkey的存储数据量。上文分析HBase这种存储方式的弊端是说道会存在大量的数据源(tags)冗余以及指标(metric)冗余，有冗余是吧，那我就搞个编码，将string编码成bit，尽最大努力减少冗余。虽说这样的全局编码可以有效降低数据的存储量，但是因为全局编码字典需要存储在内存中，因此在很多时候（海量标签值），字典所需内存都会非常之大。
+
+上述两个优化可以参考OpenTSDB这张经典的示意图：
+
+![](pic/026.png)
+
+|优化过程|key|value|
+|:--|:--|:--|
+|原始数据|"region=cn-shanghai&hostname:web-01&cpu:cpu-0_sys.cpu.user_1557142276000" |88.67|
+|全局编码|0000015BE835E0000001000001000002000003|88.67|
+|时间戳优化|0000015BE835E0000001000001000002000003|2276:88.67|
+
+
+
+## OpenTSDB体系结构
+
+![](pic/027.png)
+
+* 使用hbase作为存储中心，它无须采样，可以完整的收集和存储上亿的数据点，支持秒级别的数据监控，得益于hbase的分布式列式存储，hbase可以灵活的支持metrics的增加，可以支持上万机器和上亿数据点的采集。
+* TSD是hbase对外通信的daemon程序，没有master/slave之分，也没有共享状态，因此利用这点和hbase集群的特点就可以消除单点。用户可以通过telnet或者http协议直接访问TSD接口，也可以通过rpc访问TSD。
+* 每一个需要获取metrics的Servers都需要设置一个Collector用来收集时间序列数据。这个Collector就是你收集数据的脚本。
