@@ -121,7 +121,7 @@ root@SH_MySQL-01 17:34:  [(none)]> select i.trx_mysql_thread_id from information
 
 ### 1. 安装科学上网工具
 
-
+[MAC 科学上网](https://github.com/johntoms/study-go/blob/master/docs/%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86.md)
 
 ### 2. 安装telegraf编译环境
 
