@@ -56,9 +56,9 @@ Exec输入插件将支持的Telegraf输入数据格式 （InfluxDB线路协议�
 |measurement|连接符|tag_set|连接符| field_set|连接符| timestamp|
 |:--|:--|:--|:--|:--|:--|:--|
 |`测量(必选)`||`标记集(可选)`||`字段集（可选）`||`时间戳（可选）`|
-||`逗号`|`逗号`||||
-||||`空格`|`逗号`|||
-||||||`空格`||
+||`逗号`|`逗号`||||
+||||`空格`|`逗号`|||
+||||||`空格`||
 
 单行Line Protocol表示InfluxDB中的一个数据点。它通知InfluxDB点的测量，标记集，字段集和时间戳。
 
@@ -106,7 +106,7 @@ Exec输入插件将支持的Telegraf输入数据格式 （InfluxDB线路协议�
 |timestamp|||||1561442557000000|
 
 注意：
-1. 在同一个measurement测量中，**相同的字段值的数据类型应该一致**。例如，如果InfluxDB尝试将整数存储在与浮点数相同的分片中，先写入了浮点数的字段，那么再写整数会失败，先写整数再写浮点会成功（bug）
+1. 在同一个measurement测量中，**相同的字段值的数据类型应该一致**。例如，如果InfluxDB尝试将整数存储在与浮点数相同的分片中，先写入了浮点数的字段，那么再写整数会失败，先写整数再写浮点会成功（bug）
 2. 严格注意字段值中的字符串，必须用**双引号**。
 
 #### 引用
@@ -124,7 +124,7 @@ Exec输入插件将支持的Telegraf输入数据格式 （InfluxDB线路协议�
 
 [如何处理帮助稳定](https://docs.influxdata.com/influxdb/v1.7/troubleshooting/frequently-asked-questions/#how-does-influxdb-handle-duplicate-points)
 
-如果measurement相同，tag_set相同,时间戳相同时，有两个不同数据点，influxdb将会进行合并。例如：
+如果measurement相同，tag_set相同,时间戳相同时，有两个不同数据点，influxdb将会进行合并。例如：
 
 ```mysql
 
@@ -251,7 +251,7 @@ time                 host          i        instanceid j  k         tag1 tag2
 2. 可以有多个`inpust.exec`吗？使用场景是？
 
   ```
-  可以有多个inpust.exec，当多个脚本的执行频率（指标采集的频率）不同时适用于该场景。
+  可以有多个inpust.exec，当多个脚本的执行频率（指标采集的频率）不同时适用于该场景。
   [[inputs.exec]]
       commands = [
         "/tmp/test01.sh",
