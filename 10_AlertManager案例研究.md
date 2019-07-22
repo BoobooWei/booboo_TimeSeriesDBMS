@@ -282,7 +282,7 @@ scrape_configs:
 ```yaml
 metric_relabel_configs:
     - regex: 'slave_.*_gtid_set'
-      action: labeldrop
+      action: labeldrop    
 ```
 
 #### 5. 查看Prometheus指标标签是否被删除
@@ -346,7 +346,7 @@ route:
   group_wait: 5s # 分组等待5s后进行合并
   group_interval: 1h # 下一次分组告警等待1h
   repeat_interval: 24h # 24小时之后重复告警
-```  
+```
 
 
 #### 8. 观察AlertManager告警情况
@@ -426,7 +426,28 @@ route:
 |第二次|`7月17日 17:50`|
 |第一次|`7月18日 18:50`|
 
-**思考：为什么会比24h多了1个小时？**
+#### 11. 再次优化Prometheus标签配置
+
+![](pic/20190722105438.jpg)
+
+![](pic/201907221050.png)
+从采集的主从明细可以看到，除了position会变化外，IO线程同步的主库日志、从库的relay也会变化，因此，可以将相关标签都drop掉。
+
+```yaml
+metric_relabel_configs:
+   - regex: 'slave_.*_gtid_set'
+      action: labeldrop
+   - regex: 'slave_.*_file'
+      action: labeldrop
+   - regex: 'slave_slave_io_state'
+      action: labeldrop
+   - regex: 'slave_until_condition'
+      action: labeldrop
+```
+
+
+
+思考：为什么会比24h多了1个小时？**
 
 第二次:Alertmanager原数据
 
