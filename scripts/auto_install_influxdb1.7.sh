@@ -131,8 +131,10 @@ sed -i '/^\[http/a auth-enabled = true' /etc/influxdb/influxdb.conf
 if [ "$edition" == 7 ]
 then
   systemctl stop influxdb
-else
   systemctl start influxdb
+else
+  service influxdb stop
+  service influxdb start
 fi
 
 
