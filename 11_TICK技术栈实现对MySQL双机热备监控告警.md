@@ -40,6 +40,7 @@ bash myinfluxdb1.7ctl.sh all start
 
 ```bash
 [[inputs.mysql]]
+  interval = "300s"
   servers = ["username:passowrd@tcp(url:port)/?tls=false"]
   metric_version = 2
   perf_events_statements_digest_text_limit  = 120
