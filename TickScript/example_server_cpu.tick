@@ -1,0 +1,36 @@
+var critLevel = 80 // The CPU percentage we want to alert on
+var critTime = 15 // How long the CPU percentage must be at the critLevel (in this case, 80) percentage before we alert
+var critResetTime = 15 // How long the CPU percentage must be back below the critLevel (again, 80) before we reset the alert
+
+stream // Tell Kapacitor that this alert is using stream data
+    |from()
+        .measurement('cpu') // Tell Kapacitor to look at the CPU data
+    |where(lambda: ("host" == '$reported_hostname') AND ("cpu" == 'cpu-total')) // Only look at the data for a particular server (more on this below)
+    |groupBy('host')
+    |eval(lambda: 100.0 - "usage_idle") // Calculate percentage of CPU used...
+      .as('cpu_used') // ... and save this value in it's own variable
+    |stateDuration(lambda: "cpu_used" >= critLevel) // Keep track of how long CPU percentage has been above the alerting threshold
+        .unit(1m) // Minutely resolution is enough for us, so we use minutes for our units
+        .as('crit_duration') // Store the number calculated above for later user
+    |stateDuration(lambda: "cpu_used" < critLevel) // The same as the above 3 lines, but for resetting the alert status
+        .unit(1m) .as('crit_reset_duration')
+    |alert() // Create an alert...
+        .id('CPU - {{ index .Tags "host" }}') // The alert title
+        .message('{{.Level}} - CPU Usage > ' + string(critLevel) + ' on {{ index .Tags "host" }}') // The information contained in the alert
+        .details('''
+        {{ .ID }}
+        {{ .Message }}
+        ''')
+        .crit(lambda: "crit_duration" >= critTime) // Generate a critical alert when CPU percentage has been above the threshold for the specified amount of time
+        .critReset(lambda: "crit_reset_duration" >= critResetTime) // Reset the alert when CPU percentage has come back below the threshold for the right time
+        .stateChangesOnly() // Only send out information when an alert changes from normal to critical, or back again
+        .log('/var/log/kapacitor/kapacitor_alerts.log') // Record in a log file that this alert was generated / reset
+        .email() // Send the alert via email
+        |influxDBOut() // Write the alert data back into InfluxDB for later reference...
+             .measurement('kapacitor_alerts') // The name to store the data under
+             .tag('kapacitor_alert_level', 'critical') // Information on the alert
+.tag('metric', 'cpu') // The type of alert that was generated
+
+
+/* kapacitor define example_server_cpu -type stream -tick cpu.tick -dbrp example_server.autogen
+kapacitor enable example_server_cpu */
