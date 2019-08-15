@@ -48,3 +48,16 @@ bash myinfluxdb1.7ctl.sh all start
 |`/usr/lib/kapacitor/scripts/kapacitor.service`|`Service`|
 |`/var/lib/kapacitor`|数据目录|
 |`/var/log/kapacitor`|日志目录|
+
+
+## 进程和监听端口
+
+默认监听端口`9092`
+
+```bash
+[root@node1 ~]# ps -ef|grep kapacitor
+root       513   453  0 09:22 pts/0    00:00:00 grep --color=auto kapacitor
+kapacit+  1024     1  0 8月15 ?       00:00:08 /usr/bin/kapacitord -config /etc/kapacitor/kapacitor.conf
+[root@node1 ~]# ss -luntp|grep kapacitor
+tcp    LISTEN     0      128                   :::9092                 :::*      users:(("kapacitord",1024,8))
+```
