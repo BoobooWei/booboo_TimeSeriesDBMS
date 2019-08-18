@@ -1,3 +1,15 @@
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [TICKscript 语法](#tickscript-语法)
+	- [介绍](#介绍)
+	- [符号](#符号)
+	- [语法](#语法)
+	- [关键字](#关键字)
+	- [运算符](#运算符)
+	- [链接运算符](#链接运算符)
+
+<!-- /TOC -->
+
 # TICKscript 语法
 
 ## 介绍
