@@ -1,5 +1,18 @@
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-[toc]
+- [TICKscript 数据类型](#tickscript-数据类型)
+	- [布尔值 Booleans](#布尔值-booleans)
+	- [数字型 Int64 AND Float64](#数字型-int64-and-float64)
+	- [持续时间 Duration](#持续时间-duration)
+	- [字符串](#字符串)
+	- [字符串模板](#字符串模板)
+	- [字符串列表](#字符串列表)
+	- [正则表达式](#正则表达式)
+	- [Lambda表达式](#lambda表达式)
+				- [节点](#节点)
+- [数据类型转换](#数据类型转换)
+
+<!-- /TOC -->
 
 # TICKscript 数据类型
 
