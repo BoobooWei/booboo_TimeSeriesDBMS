@@ -22,6 +22,7 @@
 |B|数据定义节点|**定义待处理的数据帧或数据流**||
 |B|数据定义节点|`FromNode`|只能跟着`BatchNode`|
 |B|数据定义节点|`QueryNode`|只能跟着`StreamNode`|
+|B|数据定义节点|`SideloadNode`| 基于来自各种源的分层数据向点添加字段和标签 |
 |C|数据操作节点|**更改或生成数据集内的值**||
 |C|数据操作节点|`DefaultNode`|用于为数据系列中的tag和field设置默认值|
 |C|数据操作节点|`ShiftNode`|用于移动数据点时间戳|
@@ -40,6 +41,9 @@
 |D|处理节点|`InfluxQLNode`|提供对InfluxQL功能的访问|
 |D|处理节点|`StateDurationNode`|计算给定状态持续时间|
 |D|处理节点|`StatsNode`|给定时间间隔发出有关另一个节点内部统计信息|
+|D|处理节点|`BarrierNode`        | 可以在没有数据流量的情况下执行管道|
+|D|处理节点|`ChangeDetectNode`   | 如果字段值发生变化则创建节点|
+|D|处理节点|`StateCountNode`     | 计算连续点的在一个给定的状态的数目|
 |D|处理节点|**用于触发事件**||
 |D|处理节点|`AlertNode`|配置警报发射|
 |D|处理节点|`DeadmanNode`|实际上是辅助函数，它是alert当数据流低于指定阈值时触发的别名|
@@ -48,9 +52,13 @@
 |D|处理节点|`InfluxDBOutNode`|在收到数据时将数据写入InfluxDB|
 |D|处理节点|`K8sAutoscaleNode`|触发Kubernetes™资源的自动缩放|
 |D|处理节点|`KapacitorLoopback`|将数据写回kapacitor流|
+|D|处理节点|`SwarmAutoscaleNode` | 触发Docker Swarm模式集群上的服务的自动调度事件。该节点还输出触发事件的点|
+|D|处理节点|`EC2AutoscaleNode`   | 触发AWS Autoscaling组上的组的自动调度事件|
 |D|处理节点|`LogNode`|记录通过它的所有数据|
-|E|用户自定义的函数UDF|*`UDFNode`|*用于实现由用户或脚本定义的功能**|
+|E|用户自定义的函数UDF|`UDFNode`|**用于实现由用户或脚本定义的功能**|
 |F|内部使用节点|`NoOpNode`|**不要用**|
 
 
 ## 节点属性方法
+
+[Nodes官方文档](https://docs.influxdata.com/kapacitor/v1.5/nodes/)
