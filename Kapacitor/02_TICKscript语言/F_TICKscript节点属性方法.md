@@ -45,9 +45,12 @@
 |D|处理节点|`DeadmanNode`|实际上是辅助函数，它是alert当数据流低于指定阈值时触发的别名|
 |D|处理节点|`HTTPOutNode`|为其收到的每个组缓存最新数据，使用字符串参数作为最终定位器上下文，使其可通过Kapicator http服务器使用|
 |D|处理节点|`HTTPPostNode`|将数据发布到字符串数组中指定的HTTP端点|
-|D|处理节点|`InfluxDBNode`|在收到数据时将数据写入InfluxDB|
+|D|处理节点|`InfluxDBOutNode`|在收到数据时将数据写入InfluxDB|
 |D|处理节点|`K8sAutoscaleNode`|触发Kubernetes™资源的自动缩放|
 |D|处理节点|`KapacitorLoopback`|将数据写回kapacitor流|
-|D|处理节点|`log`|记录通过它的所有数据|
-|E|用户自定义的函数UDF|**用于实现由用户或脚本定义的功能**||
-|F|内部使用节点|**不要用**|
+|D|处理节点|`LogNode`|记录通过它的所有数据|
+|E|用户自定义的函数UDF|*`UDFNode`|*用于实现由用户或脚本定义的功能**|
+|F|内部使用节点|`NoOpNode`|**不要用**|
+
+
+## 节点属性方法
