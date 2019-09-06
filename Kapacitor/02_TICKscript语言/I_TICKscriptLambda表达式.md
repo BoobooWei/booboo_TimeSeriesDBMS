@@ -37,8 +37,17 @@ TICKscript尝试类似于InfluxQL，因为您在InfluxQL WHERE子句中使用的
 
 内置函数分为：
 
-1. 有状态
-2. 无状态
+| 内置函数                                                     |                                                              |                  | 数量 |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- | ---- |
+| [Stateful functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#stateful-functions) | 有状态函数                                                   |                  | 3    |
+| [Stateless functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#stateless-functions) | 无状态函数                                                   |                  |      |
+|                                                              | [Type conversion functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#type-conversion-functions) | 类型转换函数     |      |
+|                                                              | [Existence](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#existence) | 存在函数         |      |
+|                                                              | [Time functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#time-functions) | 时间函数         |      |
+|                                                              | [Math functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#math-functions) | 数学函数         |      |
+|                                                              | [String functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#string-functions) | 字符串函数       |      |
+|                                                              | [Human string functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#human-string-functions) | 人性化字符串函数 |      |
+|                                                              | [Conditional functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#conditional-functions) | 条件函数         | 1    |
 
 ### 有状态函数
 
@@ -146,9 +155,30 @@ A.D. =
 \frac{\sum\mid x-\overline x  \mid f}{n f}
 $$
 
-
 ### 无状态函数
+
+#### 类型转换函数
 
 |No.|函数|返回值|解释|
 |:--|:--|:--|:--|
-|||||
+|1|`bool(value)`|`True/False`|将字符串和数字转换为布尔值|
+
+#### [条件函数](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#conditional-functions)
+
+##### 如果
+
+根据第一个参数的值返回其操作数的结果。第二个和第三个参数必须返回相同的类型。
+
+例：
+
+```js
+
+```
+
+`value`上例中字段的值将是字符串，`true`或者`false`取决于作为第一个参数传递的条件。
+
+该`if`函数的返回类型相同类型作为其第二个和第三个参数。
+
+```js
+
+```
