@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eca977dd-1a86-4154-bb3d-02934471916f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Chronograf/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Grafana/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfluxDB/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Telegraf/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/监控告警技术栈尝试/readme.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/01_TimeSeriesDBMS'sTechnologyAndFrameworkEvolution.md" beforeDir="false" afterPath="$PROJECT_DIR$/InfluxDB/01_TimeSeriesDBMS'sTechnologyAndFrameworkEvolution.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/02_OpenTSDB.md" beforeDir="false" afterPath="$PROJECT_DIR$/InfluxDB/02_OpenTSDB.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/03_InfluxDB.md" beforeDir="false" afterPath="$PROJECT_DIR$/InfluxDB/03_InfluxDB.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/04_AliyunTSDB.md" beforeDir="false" afterPath="$PROJECT_DIR$/InfluxDB/04_AliyunTSDB.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05_diff_aliyun_TSDB_InfluxDB.md" beforeDir="false" afterPath="$PROJECT_DIR$/InfluxDB/05_diff_aliyun_TSDB_InfluxDB.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/06_Telegraf自定义指标源码GO编译实践.md" beforeDir="false" afterPath="$PROJECT_DIR$/Telegraf/01_Telegraf自定义指标源码GO编译实践.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/07_TPAD技术栈实现对RDS_For_MySQL监控告警.md" beforeDir="false" afterPath="$PROJECT_DIR$/监控告警技术栈尝试/01_TPAD技术栈实现对RDS_For_MySQL监控告警.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/08_PIG 技术栈实现对RDS_For_MySQL监控指标搜集和展示.md" beforeDir="false" afterPath="$PROJECT_DIR$/监控告警技术栈尝试/02_PIG 技术栈实现对RDS_For_MySQL监控指标搜集和展示.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/09_Telegraf_InfluxDB_Line_Protocol.md" beforeDir="false" afterPath="$PROJECT_DIR$/InfluxDB/09_Telegraf_InfluxDB_Line_Protocol.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/10_AlertManager案例研究.md" beforeDir="false" afterPath="$PROJECT_DIR$/监控告警技术栈尝试/03_AlertManager案例研究.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/11_TICK技术栈实现对MySQL双机热备监控告警.md" beforeDir="false" afterPath="$PROJECT_DIR$/监控告警技术栈尝试/04_TICK技术栈实现对MySQL双机热备监控告警.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/12_TICKscripts开发规范.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,13 +14,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="150">
-                <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="602">
+              <caret line="124" column="6" selection-start-line="124" selection-start-column="6" selection-end-line="124" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -54,10 +34,11 @@
         <option value="$PROJECT_DIR$/07_TPAD技术栈实现对RDS_For_MySQL监控告警.md" />
         <option value="$PROJECT_DIR$/scripts/python_meam.py" />
         <option value="$PROJECT_DIR$/监控告警技术栈尝试/01_TPAD技术栈实现对RDS_For_MySQL监控告警.md" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Grafana/readme.md" />
         <option value="$PROJECT_DIR$/Telegraf/readme.md" />
         <option value="$PROJECT_DIR$/监控告警技术栈尝试/readme.md" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -77,36 +58,6 @@
             <path>
               <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-              <item name="Chronograf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-              <item name="Grafana" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-              <item name="InfluxDB" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-              <item name="Kapacitor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-              <item name="Telegraf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booboo_TimeSeriesDBMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booboo_TimeSeriesDBMS" type="462c0819:PsiDirectoryNode" />
-              <item name="监控告警技术栈尝试" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -213,12 +164,12 @@
       <workItem from="1561224674252" duration="1299000" />
       <workItem from="1567733503635" duration="836000" />
       <workItem from="1567761109639" duration="244000" />
-      <workItem from="1567866259320" duration="433000" />
+      <workItem from="1567866259320" duration="702000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2812000" />
+    <option name="totallyTimeSpent" value="3081000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -238,8 +189,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32959184" />
-      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.26938775" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32959184" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.26938775" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -305,16 +256,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/监控告警技术栈尝试/readme.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="135">
-            <caret line="9" selection-start-line="9" selection-end-line="9" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Telegraf/readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -343,13 +284,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/监控告警技术栈尝试/readme.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor>
+            <caret selection-end-line="8" selection-end-column="8" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="150">
-            <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <first_editor relative-caret-position="255">
+            <caret line="17" selection-start-line="17" selection-end-line="17" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="124" column="6" selection-start-line="124" selection-start-column="6" selection-end-line="124" selection-end-column="6" />
         </state>
       </provider>
     </entry>

@@ -8,3 +8,10 @@
 
 ## kapacitor
 
+## others
+ 
+### prometheus 
+
+### alertmanager
+
+### 各种技术栈的组合尝试
