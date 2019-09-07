@@ -1,6 +1,6 @@
 # TICK技术栈实现对MySQL双机热备监控告警
 
-[toc]
+[TOC]
 
 > Telegraf + Influxdb + Chranograf + Kapacitor + Dingding
 

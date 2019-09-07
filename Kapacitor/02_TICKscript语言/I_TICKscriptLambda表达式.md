@@ -2,14 +2,19 @@
 
 - [TICKscript Lambda表达式](#tickscript-lambda表达式)
 	- [概述](#概述)
-	- [内置函数](#内置函数)
-		- [有状态函数](#有状态函数)
-			- [`sigma`可用于定义强大的告警](#sigma可用于定义强大的告警)
-				- [知识点-平均偏差](#知识点-平均偏差)
-- [mean 平均值](#mean-平均值)
-- [dev 方差](#dev-方差)
-- [stdev 标准差](#stdev-标准差)
-		- [无状态函数](#无状态函数)
+		- [简介](#简介)
+		- [内置函数](#内置函数)
+	- [有状态函数](#有状态函数)
+		- [`sigma`可用于定义强大的告警](#sigma可用于定义强大的告警)
+			- [知识点-平均偏差](#知识点-平均偏差)
+	- [无状态函数](#无状态函数)
+		- [类型转换函数](#类型转换函数)
+		- [判断存在的函数](#判断存在的函数)
+		- [时间函数](#时间函数)
+		- [数学函数](#数学函数)
+		- [字符串函数](#字符串函数)
+		- [](#)
+		- [条件函数](#条件函数)
 
 <!-- /TOC -->
 
@@ -17,9 +22,13 @@
 
 [Lambda表达式官方帮助](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/)
 
+[函数帮助](https://help.aliyun.com/document_detail/113126.html?spm=a2c4g.11174283.6.740.529f77a2ijwJ6I#Transformations)
+
 ## 概述
 
 TICKscript使用lambda表达式定义数据点的转换，并定义充当过滤器的布尔条件。
+
+### 简介
 
 Lambda表达式包含：
 * 数学运算
@@ -33,7 +42,7 @@ TICKscript尝试类似于InfluxQL，因为您在InfluxQL WHERE子句中使用的
 * 所有`字段Field`或`标记Tag` 的标识符必须加双引号。
 * 相等的比较运算符为`==`不是`=`。
 
-## 内置函数
+### 内置函数
 
 内置函数分为：
 
@@ -49,15 +58,15 @@ TICKscript尝试类似于InfluxQL，因为您在InfluxQL WHERE子句中使用的
 |                                                              | [Human string functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#human-string-functions) | 人性化字符串函数 |      |
 |                                                              | [Conditional functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#conditional-functions) | 条件函数         | 1    |
 
-### 有状态函数
+## 有状态函数
 
-|No.|函数|返回值|解释|
+|No.|函数|返回值|描述|
 |:--|:--|:--|:--|
 |1|`count()`|`int64`|返回表达式的计算次数|
-|2|`sigma(value float64)`|`float64`|计算给定值远离运行平均值的标准偏差数。每次评估表达式时，都会更新运行平均值和标准差。|
-|3|`spread(value float64)`|`float64`|计算传递给它的所有值的运行范围。范围是收到的最大值和最小值之间的差异。|
+|2|`sigma(value )`|`float64`|计算给定值远离运行平均值的标准偏差数。每次评估表达式时，都会更新运行平均值和标准差。|
+|3|`spread(value )`|`float64`|计算传递给它的所有值的运行范围。范围是收到的最大值和最小值之间的差异。|
 
-#### `sigma`可用于定义强大的告警
+### `sigma`可用于定义强大的告警
 
 每次计算表达式时，它都会更新正在运行的统计信息，然后返回偏差。
 
@@ -76,7 +85,7 @@ stream
         .crit(lambda: sigma("value") > 3.0)
 ```
 
-##### 知识点-平均偏差
+#### 知识点-平均偏差
 
 [什么是平均偏差？](https://baike.baidu.com/item/%E5%B9%B3%E5%9D%87%E5%81%8F%E5%B7%AE/11042506)
 
@@ -141,11 +150,11 @@ def cal_mean_std(sum_list_in):
 sum_list_in = [10,11,9,8,12,11]
 mean, DEV, STDEV=cal_mean_std(sum_list_in)
 print(mean, DEV, STDEV)
-
-# mean 平均值
-# dev 方差
-# stdev 标准差
 ```
+
+* mean 平均值
+* dev 方差
+* stdev 标准差
 
 
 2. 加权平均偏差
@@ -155,17 +164,124 @@ A.D. =
 \frac{\sum\mid x-\overline x  \mid f}{n f}
 $$
 
-### 无状态函数
+## 无状态函数
 
-#### 类型转换函数
+### 类型转换函数
+
+|No.|函数|返回值|描述|
+|:--|:--|:--|:--|
+|1|`bool(value)`|`True/False`|将字符串和数字转换为布尔值|
+|2|`int(value)`|`int64`|强制将字符串或float64转换为int64|
+|3|`float(value)`|`float64`|制将字符串或int64转换为float64|
+|4|`string(value)`|`string`|将bool，int64或float64转换为字符串|
+|5|`duration(value int64|float64, unit duration)`|`duration`|将int64或float64转换为持续时间|
+
+### 判断存在的函数
 
 |No.|函数|返回值|解释|
 |:--|:--|:--|:--|
-|1|`bool(value)`|`True/False`|将字符串和数字转换为布尔值|
+|1|`|where(lambda: isPresent("myfield"))`|`True/False`|判断`myfield`是否存在|
 
-#### [条件函数](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#conditional-functions)
+该函数在`where`节点中使用，根据指定的字段或标记键是否存在返回布尔值。用于过滤数据这是缺少指定的字段或标记。
 
-##### 如果
+### 时间函数
+
+| No.  | 函数                | 返回值  | 描述                                    |
+| ---- | ------------------- | ------- | --------------------------------------- |
+| 1    | `unixNano(t time) ` | `int64` | Unix时间                                |
+| 2    | `minute(t time) `   | `int64` | 分钟                                    |
+| 3    | `hour(t time) `     | `int64` | 小时                                    |
+| 4    | `weekday(t time) `  | `int64` | 周 ` [0,6], 0 is Sunday`                |
+| 5    | `day(t time) `      | `int64` | the day within the month: range [1,31]  |
+| 6    | `month(t time) `    | `int64` | the month within the year: range [1,12] |
+| 7    | `year(t time) `     | `int64` | 年                                      |
+
+例如
+
+```js
+lambda: hour("time") >= 9 AND hour("time") < 19
+```
+
+### 数学函数
+
+| No.  | 函数                                                         | 返回值 | 描述                                                         |
+| ---- | ------------------------------------------------------------ | ------ | ------------------------------------------------------------ |
+| 1 | [abs(x)](https://golang.org/pkg/math/#Abs)  | `float64` | Abs返回`x`的绝对值。                                           |
+| 2 | [acos(x)](https://golang.org/pkg/math/#Acos) | `float64` | Acos以弧度为单位返回`x`的反余弦。                              |
+| 3 | [acosh(x)](https://golang.org/pkg/math/#Acosh) | `float64` | Acosh返回x`的反双曲余弦值。                                   |
+| 4 | [asin(x)](https://golang.org/pkg/math/#Asin) | `float64` | Asin以弧度为单位返回`x`的反正弦值。                            |
+| 5 | [asinh(x)](https://golang.org/pkg/math/#Asinh) | `float64` | Asinh返回`x`的反双曲正弦值。                                   |
+| 6 | [atan(x)](https://golang.org/pkg/math/#Atan) | `float64` | Atan以弧度为单位返回`x`的反正切值。                            |
+| 7 | [atan2(y,x)](https://golang.org/pkg/math/#Atan2) | `float64` | Atan2返回`y / x`的反正切，使用二者的符号确定返回值的象限。     |
+| 8 | [atanh(x)](https://golang.org/pkg/math/#Atanh) | `float64` | Atanh返回`x`的反双曲正切。                                     |
+| 9 | [cbrt(x)](https://golang.org/pkg/math/#Cbrt) | `float64` | Cbrt返回`x`的立方根。                                          |
+| 10 | [ceil(x)](https://golang.org/pkg/math/#Ceil) | `float64` | Ceil返回大于或等于`x`的最小整数值。                            |
+| 11 | [cos(x)](https://golang.org/pkg/math/#Cos)  | `float64` | Cos返回弧度参数`x`的余弦值。                                   |
+| 12 | [cosh(x)](https://golang.org/pkg/math/#Cosh) | `float64` | Cosh返回`x`的双曲余弦值。                                      |
+| 13 | [erf(x)](https://golang.org/pkg/math/#Erf)  | `float64` | Erf返回`x`的错误函数。                                         |
+| 14 | [erfc(x)](https://golang.org/pkg/math/#Erfc) | `float64` | Erfc返回`x`的互补误差函数。                                    |
+| 15 | [exp(x)](https://golang.org/pkg/math/#Exp)  | `float64` | Exp返回`e ** x`，`x`的`base-e`指数。                               |
+| 16 | [exp2(x)](https://golang.org/pkg/math/#Exp2) | `float64` | Exp2返回`2 ** x`，`x`的基数为`2`的指数。                           |
+| 17 | [expm1(x)](https://golang.org/pkg/math/#Expm1) | `float64` | Expm1返回`e ** x - 1`，`x`的基数为`e`的指数减`1`.当`x`接近零时，它比`Exp(x）-1`更准确。 |
+| 18 | [floor(x)](https://golang.org/pkg/math/#Floor) | `float64` | Floor返回小于或等于`x`的最大整数值。                           |
+| 19 | [gamma(x)](https://golang.org/pkg/math/#Gamma) | `float64` | Gamma返回`x`的`Gamma`函数。                                      |
+| 20 | [hypot(p,q)](https://golang.org/pkg/math/#Hypot) | `float64` | Hypot返回`Sqrt(p * p + q * q）`，注意避免不必要的溢出和下溢。 |
+| 21 | [j0(x)](https://golang.org/pkg/math/#J0)    | `float64` | J0返回第一类的零阶贝塞尔函数。                               |
+| 22 | [j1(x)](https://golang.org/pkg/math/#J1)    | `float64` | J1返回第一类的一阶贝塞尔函数。                         |
+| 23 | [jn（n int64，x)](https://golang.org/pkg/math/#Jn) | `float64` | Jn返回第一种order-n Bessel函数。                             |
+| 24 | [log(x)](https://golang.org/pkg/math/#Log)  | `float64` | Log返回`x`的自然对数。                                         |
+| 25 | [log10(x)](https://golang.org/pkg/math/#Log10) | `float64` | Log10返回`x`的十进制对数。                                     |
+| 26 | [log1p(x)](https://golang.org/pkg/math/#Log1p) | `float64` | Log1p返回`1`的自然对数加上其参数`x`。当`x`接近零时，它比`Log(1 + x）`更准确。 |
+| 27 | [log2(x)](https://golang.org/pkg/math/#Log2) | `float64` | Log2返回`x`的二进制对数。                                      |
+| 28 | [logb(x)](https://golang.org/pkg/math/#Logb) | `float64` | Logb返回`x`的二进制指数。                                      |
+| 29 | [max(x,y)](https://golang.org/pkg/math/#Max) | `float64` | Max返回`x`或`y`中较大的一个。                                    |
+| 30 | [min(x,y)](https://golang.org/pkg/math/#Min) | `float64` | Min返回`x`或`y`中较小的一个。                                    |
+| 31 | [mod(x,y)](https://golang.org/pkg/math/#Mod) | `float64` | Mod返回`x / y`的浮点余数。结果的大小小于y，其符号与x的符号一致。 |
+| 32 | [pow(x,y)](https://golang.org/pkg/math/#Pow) | `float64` | Pow返回`x ** y`，y的base-x指数。                               |
+| 33 | [pow10(x int64](https://golang.org/pkg/math/#Pow10) | `float64` | Pow10返回`10 ** e`，`e`的基数为`10`的指数。                        |
+| 34 | [sin(x)](https://golang.org/pkg/math/#Sin)  | `float64` | Sin返回弧度参数`x`的正弦值。                                   |
+| 35 | [sinh(x)](https://golang.org/pkg/math/#Sinh) | `float64` | Sinh返回`x`的双曲正弦值。                                      |
+| 36 | [sqrt(x)](https://golang.org/pkg/math/#Sqrt) | `float64` | Sqrt返回`x`的平方根。                                          |
+| 37 | [tan(x)](https://golang.org/pkg/math/#Tan)  | `float64` | Tan返回弧度参数`x`的正切值。                                   |
+| 38 | [tanh(x)](https://golang.org/pkg/math/#Tanh) | `float64` | Tanh返回`x`的双曲正切。                                        |
+| 39 | [trunc(x)](https://golang.org/pkg/math/#Trunc) | `float64` | Trunc返回`x`的整数值。                                         |
+| 40 | [y0(x)](https://golang.org/pkg/math/#Y0)    | `float64` | Y0返回第二种零阶贝塞尔函数。                                 |
+| 41 | [y1(x)](https://golang.org/pkg/math/#Y1)    | `float64` | Y1返回第二种顺序一贝塞尔函数。                               |
+| 42 | [yn(n int64,x)](https://golang.org/pkg/math/#Yn) | `float64` | Yn返回第二种order-n 贝塞尔函数。                             |
+
+### 字符串函数
+
+| Function                                                     | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [strContains(s, substr string) bool](https://golang.org/pkg/strings/#Contains) | StrContains reports whether substr is within s.              |
+| [strContainsAny(s, chars string) bool](https://golang.org/pkg/strings/#ContainsAny) | StrContainsAny reports whether any Unicode code points in chars are within s. |
+| [strCount(s, sep string) int64](https://golang.org/pkg/strings/#Count) | StrCount counts the number of non-overlapping instances of sep in s. If sep is an empty string, Count returns 1 + the number of Unicode code points in s. |
+| [strHasPrefix(s, prefix string) bool](https://golang.org/pkg/strings/#HasPrefix) | StrHasPrefix tests whether the string s begins with prefix.  |
+| [strHasSuffix(s, suffix string) bool](https://golang.org/pkg/strings/#HasSuffix) | StrHasSuffix tests whether the string s ends with suffix.    |
+| [strIndex(s, sep string) int64](https://golang.org/pkg/strings/#Index) | StrIndex returns the index of the first instance of sep in s, or -1 if sep is not present in s. |
+| [strIndexAny(s, chars string) int64](https://golang.org/pkg/strings/#IndexAny) | StrIndexAny returns the index of the first instance of any Unicode code point from chars in s, or -1 if no Unicode code point from chars is present in s. |
+| [strLastIndex(s, sep string) int64](https://golang.org/pkg/strings/#LastIndex) | StrLastIndex returns the index of the last instance of sep in s, or -1 if sep is not present in s. |
+| [strLastIndexAny(s, chars string) int64](https://golang.org/pkg/strings/#LastIndexAny) | StrLastIndexAny returns the index of the last instance of any Unicode code point from chars in s, or -1 if no Unicode code point from chars is present in s. |
+| [strLength(s string) int64](https://golang.org/ref/spec#Length_and_capacity) | StrLength returns the length of the string.                  |
+| [strReplace(s, old, new string, n int64) string](https://golang.org/pkg/strings/#Replace) | StrReplace returns a copy of the string s with the first n non-overlapping instances of old replaced by new. |
+| [strSubstring(s string, start, stop int64) string](https://golang.org/ref/spec#Index_expressions) | StrSubstring returns a substring based on the given indexes, strSubstring(str, start, stop) is equivalent to str[start:stop] in Go. |
+| [strToLower(s string) string](https://golang.org/pkg/strings/#ToLower) | StrToLower returns a copy of the string s with all Unicode letters mapped to their lower case. |
+| [strToUpper(s string) string](https://golang.org/pkg/strings/#ToUpper) | StrToUpper returns a copy of the string s with all Unicode letters mapped to their upper case. |
+| [strTrim(s, cutset string) string](https://golang.org/pkg/strings/#Trim) | StrTrim returns a slice of the string s with all leading and trailing Unicode code points contained in cutset removed. |
+| [strTrimLeft(s, cutset string) string](https://golang.org/pkg/strings/#TrimLeft) | StrTrimLeft returns a slice of the string s with all leading Unicode code points contained in cutset removed. |
+| [strTrimPrefix(s, prefix string) string](https://golang.org/pkg/strings/#TrimPrefix) | StrTrimPrefix returns s without the provided leading prefix string. If s doesn’t start with prefix, s is returned unchanged. |
+| [strTrimRight(s, cutset string) string](https://golang.org/pkg/strings/#TrimRight) | StrTrimRight returns a slice of the string s, with all trailing Unicode code points contained in cutset removed. |
+| [strTrimSpace(s string) string](https://golang.org/pkg/strings/#TrimSpace) | StrTrimSpace returns a slice of the string s, with all leading and trailing white space removed, as defined by Unicode. |
+| [strTrimSuffix(s, suffix string) string)](https://golang.org/pkg/strings/#TrimSuffix) | StrTrimSuffix returns s without the provided trailing suffix string. If s doesn’t end with suffix, s is returned unchanged. |
+| [regexReplace(r regex, s, pattern string) string](https://golang.org/pkg/regexp/#Regexp.ReplaceAllString) | RegexReplace replaces matches of the regular expression in the input string with the output string. For example regexReplace(/a(b*)c/, ‘abbbc’, ‘group is $1’) -> ‘group is bbb’. The original string is returned if no matches are found. |
+
+###
+
+### 条件函数
+
+|No.|函数|返回值|解释|
+|:--|:--|:--|:--|
+|1|`if`|`True/False`||
 
 根据第一个参数的值返回其操作数的结果。第二个和第三个参数必须返回相同的类型。
 

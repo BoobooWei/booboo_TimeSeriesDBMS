@@ -22,3 +22,14 @@ Kapacitor是一个开源数据处理框架，可以轻松创建警报，运行ET
 |3|Kapacitor配置文件|**|
 |4|Kapacitor命令行|****|
 |5|Kapacitor监控案例|**|
+
+## awsome tools
+
+[Ansible Kapacitor](https://github.com/influxdata/ansible-kapacitor) Linux上Kapacitor的配置管理和变更自动化
+
+[kapacitor-course](https://github.com/influxdata/kapacitor-course) kapacitor 脚本教程
+
+[influx-stress](https://github.com/influxdata/influx-stress) InfluxDB压测工具
+
+[InfluxData Sandbox](https://github.com/influxdata/sandbox) TICK 沙箱
+
