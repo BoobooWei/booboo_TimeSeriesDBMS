@@ -13,10 +13,12 @@
 		- [时间函数](#时间函数)
 		- [数学函数](#数学函数)
 		- [字符串函数](#字符串函数)
-		- [](#)
+		- [人性化函数](#人性化函数)
 		- [条件函数](#条件函数)
 
 <!-- /TOC -->
+
+
 
 # TICKscript Lambda表达式
 
@@ -46,17 +48,17 @@ TICKscript尝试类似于InfluxQL，因为您在InfluxQL WHERE子句中使用的
 
 内置函数分为：
 
-| 内置函数                                                     |                                                              |                  | 数量 |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- | ---- |
-| [Stateful functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#stateful-functions) | 有状态函数                                                   |                  | 3    |
-| [Stateless functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#stateless-functions) | 无状态函数                                                   |                  |      |
-|                                                              | [Type conversion functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#type-conversion-functions) | 类型转换函数     |      |
-|                                                              | [Existence](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#existence) | 存在函数         |      |
-|                                                              | [Time functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#time-functions) | 时间函数         |      |
-|                                                              | [Math functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#math-functions) | 数学函数         |      |
-|                                                              | [String functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#string-functions) | 字符串函数       |      |
-|                                                              | [Human string functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#human-string-functions) | 人性化字符串函数 |      |
-|                                                              | [Conditional functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#conditional-functions) | 条件函数         | 1    |
+| 内置函数                                                     |                                                              |              | 数量 |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------ | ---- |
+| [Stateful functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#stateful-functions) | 有状态函数                                                   |              | `3`  |
+| [Stateless functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#stateless-functions) | 无状态函数                                                   |              | `78` |
+|                                                              | [Type conversion functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#type-conversion-functions) | 类型转换函数 | `5`  |
+|                                                              | [Existence](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#existence) | 存在函数     | `1`  |
+|                                                              | [Time functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#time-functions) | 时间函数     | `7`  |
+|                                                              | [Math functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#math-functions) | 数学函数     | `42` |
+|                                                              | [String functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#string-functions) | 字符串函数   | `21` |
+|                                                              | [Human string functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#human-string-functions) | 人性化函数   | `1`  |
+|                                                              | [Conditional functions](https://docs.influxdata.com/kapacitor/v1.5/tick/expr/#conditional-functions) | 条件函数     | `1`  |
 
 ## 有状态函数
 
@@ -251,44 +253,48 @@ lambda: hour("time") >= 9 AND hour("time") < 19
 
 ### 字符串函数
 
-| Function                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [strContains(s, substr string) bool](https://golang.org/pkg/strings/#Contains) | StrContains reports whether substr is within s.              |
-| [strContainsAny(s, chars string) bool](https://golang.org/pkg/strings/#ContainsAny) | StrContainsAny reports whether any Unicode code points in chars are within s. |
-| [strCount(s, sep string) int64](https://golang.org/pkg/strings/#Count) | StrCount counts the number of non-overlapping instances of sep in s. If sep is an empty string, Count returns 1 + the number of Unicode code points in s. |
-| [strHasPrefix(s, prefix string) bool](https://golang.org/pkg/strings/#HasPrefix) | StrHasPrefix tests whether the string s begins with prefix.  |
-| [strHasSuffix(s, suffix string) bool](https://golang.org/pkg/strings/#HasSuffix) | StrHasSuffix tests whether the string s ends with suffix.    |
-| [strIndex(s, sep string) int64](https://golang.org/pkg/strings/#Index) | StrIndex returns the index of the first instance of sep in s, or -1 if sep is not present in s. |
-| [strIndexAny(s, chars string) int64](https://golang.org/pkg/strings/#IndexAny) | StrIndexAny returns the index of the first instance of any Unicode code point from chars in s, or -1 if no Unicode code point from chars is present in s. |
-| [strLastIndex(s, sep string) int64](https://golang.org/pkg/strings/#LastIndex) | StrLastIndex returns the index of the last instance of sep in s, or -1 if sep is not present in s. |
-| [strLastIndexAny(s, chars string) int64](https://golang.org/pkg/strings/#LastIndexAny) | StrLastIndexAny returns the index of the last instance of any Unicode code point from chars in s, or -1 if no Unicode code point from chars is present in s. |
-| [strLength(s string) int64](https://golang.org/ref/spec#Length_and_capacity) | StrLength returns the length of the string.                  |
-| [strReplace(s, old, new string, n int64) string](https://golang.org/pkg/strings/#Replace) | StrReplace returns a copy of the string s with the first n non-overlapping instances of old replaced by new. |
-| [strSubstring(s string, start, stop int64) string](https://golang.org/ref/spec#Index_expressions) | StrSubstring returns a substring based on the given indexes, strSubstring(str, start, stop) is equivalent to str[start:stop] in Go. |
-| [strToLower(s string) string](https://golang.org/pkg/strings/#ToLower) | StrToLower returns a copy of the string s with all Unicode letters mapped to their lower case. |
-| [strToUpper(s string) string](https://golang.org/pkg/strings/#ToUpper) | StrToUpper returns a copy of the string s with all Unicode letters mapped to their upper case. |
-| [strTrim(s, cutset string) string](https://golang.org/pkg/strings/#Trim) | StrTrim returns a slice of the string s with all leading and trailing Unicode code points contained in cutset removed. |
-| [strTrimLeft(s, cutset string) string](https://golang.org/pkg/strings/#TrimLeft) | StrTrimLeft returns a slice of the string s with all leading Unicode code points contained in cutset removed. |
-| [strTrimPrefix(s, prefix string) string](https://golang.org/pkg/strings/#TrimPrefix) | StrTrimPrefix returns s without the provided leading prefix string. If s doesn’t start with prefix, s is returned unchanged. |
-| [strTrimRight(s, cutset string) string](https://golang.org/pkg/strings/#TrimRight) | StrTrimRight returns a slice of the string s, with all trailing Unicode code points contained in cutset removed. |
-| [strTrimSpace(s string) string](https://golang.org/pkg/strings/#TrimSpace) | StrTrimSpace returns a slice of the string s, with all leading and trailing white space removed, as defined by Unicode. |
-| [strTrimSuffix(s, suffix string) string)](https://golang.org/pkg/strings/#TrimSuffix) | StrTrimSuffix returns s without the provided trailing suffix string. If s doesn’t end with suffix, s is returned unchanged. |
-| [regexReplace(r regex, s, pattern string) string](https://golang.org/pkg/regexp/#Regexp.ReplaceAllString) | RegexReplace replaces matches of the regular expression in the input string with the output string. For example regexReplace(/a(b*)c/, ‘abbbc’, ‘group is $1’) -> ‘group is bbb’. The original string is returned if no matches are found. |
+| No.  | 函数                                                         | 返回值 | 描述                                                         |
+| ---- | ------------------------------------------------------------ | ------ | ------------------------------------------------------------ |
+| 1    | [strContains(s, substr)](https://golang.org/pkg/strings/#Contains) | `bool`   | StrContains报告`substr`是否在`s`内。                         |
+| 2    | [strContainsAny(s, chars)](https://golang.org/pkg/strings/#ContainsAny) | `bool`   | StrContainsAny报告字符中的任何`Unicode`代码点是否在`s`内。  |
+| 3    | [strCount(s, sep)](https://golang.org/pkg/strings/#Count)    | `int64`  | StrCount计算`s`中非重叠`sep`实例的数量。如果`sep`是空字符串，则`Count`返回`1 + s`中的`Unicode`代码点数。 |
+| 4    | [strHasPrefix(s, prefix)](https://golang.org/pkg/strings/#HasPrefix) | `bool`   | StrHasPrefix测试字符串`s`是否以`prefix`开头。                |
+| 5    | [strHasSuffix(s, suffix)](https://golang.org/pkg/strings/#HasSuffix) | `bool`   | StrHasSuffix测试字符串`s`是否以后`suffix`缀结尾。           |
+| 6    | [strIndex(s, sep)](https://golang.org/pkg/strings/#Index)    | `int64`  | StrIndex返回`s`中第一个`sep`实例的索引，如果`s`中不存在`sep`，则返回`-1`。 |
+| 7    | [strIndexAny(s, chars)](https://golang.org/pkg/strings/#IndexAny) | `int64`  | StrIndexAny从`1`中的字符返回任何`Unicode`代码点的第一个实例的索引，如果`s`中没有来自`chars`的`Unicode`代码点，则返回`-1`。 |
+| 8    | [strLastIndex(s, sep)](https://golang.org/pkg/strings/#LastIndex) | `int64`  | StrLastIndex返回`s`中最后一个`sep`实例的索引，如果`s`中不存在`sep`，则返回`-1`。 |
+| 9    | [strLastIndexAny(s, chars)](https://golang.org/pkg/strings/#LastIndexAny) | `int64`  | StrLastIndexAny从`s`中的字符返回任何`Unicode`代码点的最后一个实例的索引，如果s中没有来自`chars`的`Unicode`代码点，则返回`-1`。 |
+| 10   | [strLength(s)](https://golang.org/ref/spec#Length_and_capacity) | `int64`  | StrLength返回字符串的长度。                                  |
+| 11   | [strReplace(s, old, new), n int64](https://golang.org/pkg/strings/#Replace) | `string` | StrReplace返回字符串`s`的副本，其中前n个非重叠实例由`new`替换。 |
+| 12   | [strSubstring(s), start, stop int64](https://golang.org/ref/spec#Index_expressions) | `string` | StrSubstring根据给定的索引返回一个子字符串，`strSubstring(str,start,stop)`相当于Go中的`str [start：stop]`。 |
+| 13   | [strToLower(s)](https://golang.org/pkg/strings/#ToLower)     | `string` | StrToLower返回字符串s的副本，其中所有`Unicode`字母都映射到它们的小写字母。 |
+| 14   | [strToUpper(s)](https://golang.org/pkg/strings/#ToUpper)     | `string` | StrToUpper返回字符串s的副本，其中所有`Unicode`字母都映射到它们的大写字母。 |
+| 15   | [strTrim(s, cutset)](https://golang.org/pkg/strings/#Trim)   | `string` | StrTrim返回字符串s的一个片段，其中包含`cutset`中包含的所有前导和尾随`Unicode`代码点。 |
+| 16   | [strTrimLeft(s, cutset)](https://golang.org/pkg/strings/#TrimLeft) | `string` | StrTrimLeft返回字符串`s`的一个片段，其中包含`cutset`中包含的所有前导`Unicode`代码点。 |
+| 17   | [strTrimPrefix(s, prefix)](https://golang.org/pkg/strings/#TrimPrefix) | `string` | StrTrimPrefix返回`s`而没有提供的前导前缀字符串。如果`s`不以`prefix`开头，则返回s不变。 |
+| 18   | [strTrimRight(s, cutset)](https://golang.org/pkg/strings/#TrimRight) | `string` | StrTrimRight返回字符串`s`的一个切片，并删除了`cutset`中包含的所有尾随`Unicode`代码点。 |
+| 19   | [strTrimSpace(s)](https://golang.org/pkg/strings/#TrimSpace) | `string` | StrTrimSpace返回字符串`s`的一部分，删除所有前导和尾随空格，如`Unicode`所定义。 |
+| 20   | [strTrimSuffix(s, suffix)](https://golang.org/pkg/strings/#TrimSuffix) | `string` | StrTrimSuffix返回`s`而没有提供的尾随后缀字符串。如果`s`不以后缀结尾，则`s`保持不变。 |
+| 21   | [regexReplace(r regex, s, pattern)](https://golang.org/pkg/regexp/#Regexp.ReplaceAllString) | `string` | RegexReplace将输入字符串中正则表达式的匹配替换为输出字符串。例如`regexReplace(/a(b*)c/, ‘abbbc’, ‘group is $1’) -> ‘group is bbb’`。如果未找到匹配项，则返回原始字符串。 |
 
-###
+### 人性化函数
+
+|No.|函数|返回值|描述|
+|:--|:--|:--|:--|
+|1|`humanBytes(value)`|`string`|将具有单位字节的`int64`或`float64`转换为表示字节数的人类可读字符串。|
+
 
 ### 条件函数
 
-|No.|函数|返回值|解释|
+|No.|函数|返回值|描述|
 |:--|:--|:--|:--|
-|1|`if`|`True/False`||
-
-根据第一个参数的值返回其操作数的结果。第二个和第三个参数必须返回相同的类型。
+|1|`if(condition, true expression, false expression)`|`True/False`|根据第一个参数的值返回其操作数的结果。第二个和第三个参数必须返回相同的类型。|
 
 例：
 
 ```js
-
+|eval(lambda: if("field" > threshold AND "field" != 0, 'true', 'false'))
+    .as('value')
 ```
 
 `value`上例中字段的值将是字符串，`true`或者`false`取决于作为第一个参数传递的条件。
@@ -296,5 +302,5 @@ lambda: hour("time") >= 9 AND hour("time") < 19
 该`if`函数的返回类型相同类型作为其第二个和第三个参数。
 
 ```js
-
+if(condition, true expression, false expression)
 ```
