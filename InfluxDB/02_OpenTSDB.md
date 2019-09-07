@@ -71,11 +71,11 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 [Hadoop的起源](https://github.com/BoobooWei/booboo_hadoop/blob/master/01_theory/01_Introduction%20to%20the%20origin%20and%20system%20of%20hadoop.md)
 
-![](pic/006.png)
+![](../pic/006.png)
 
 从Google、Hadoop、TSDB这三条时间线中，不难发现时序数据库与他们之间的关系。
 
-![](pic/007.jpeg)
+![](../pic/007.jpeg)
 
 
 ### 阅读Google的相关论文
@@ -106,11 +106,11 @@ OpenTSDB 是可扩展的分布式时序数据库，底层依赖 HBase。作为�
 
 下图是我个人对HDFS、HBase从底层文件角度的关系理解：
 
-![](pic/008_fs_mysql.jpeg)
+![](../pic/008_fs_mysql.jpeg)
 
-![](pic/008_fs_hdfs.jpeg)
+![](../pic/008_fs_hdfs.jpeg)
 
-![](pic/008_fs_hbase.jpeg)
+![](../pic/008_fs_hbase.jpeg)
 
 ## HBase初体验
 
@@ -300,7 +300,7 @@ root       732 31176  0 23:12 pts/0    00:00:04 java -enableassertions -enablesy
 
 访问 [http://127.0.0.1:4242](http://127.0.0.1:4242/)
 
-![](pic/010.jpg)
+![](../pic/010.jpg)
 
 ### 8. 安装tcollector
 
@@ -380,7 +380,7 @@ root      2146  2052  0 23:53 ?        00:00:00 python /alidata/install/tcollect
 
 ### 12. 使用OpenTSDB的UI查询`iostat.disk.await`
 
-![](pic/011.png)
+![](../pic/011.png)
 
 ### 13. 进入HBase查看OpenTSDB创建的表明细
 
@@ -437,7 +437,7 @@ stopping hbase...........
 
 ## Bash脚本自动安装hbase_opentsdb_tcollector
 
-[Bash脚本自动安装链接](scripts/auto_install_hbase_opentsdb_tcollector.sh)
+[Bash脚本自动安装链接](../scripts/auto_install_hbase_opentsdb_tcollector.sh)
 
 ## OpenTSDB(HBase)时序数据存储模型
 
@@ -576,7 +576,7 @@ put 'tsdb', RowKey, 't:[子列]', value
 
 OpenTSDB的这种设计有什么问题呢？在了解设计问题之前需要简单看看HBase在文件中存储KV的方式，即一系列时序数据在文件、内存中的存储方式，如下图所示：
 
-![](pic/025.png)
+![](../pic/025.png)
 
 从途中可以看到一个KeyValue的数据结构由以下四个部分组成：
 
@@ -641,7 +641,7 @@ timestamp并不是想象中细粒度到秒级或毫秒级，而是精确到小�
 
 上述两个优化可以参考OpenTSDB这张经典的示意图：
 
-![](pic/026.png)
+![](../pic/026.png)
 
 |优化过程|key|value|
 |:--|:--|:--|
@@ -653,7 +653,7 @@ timestamp并不是想象中细粒度到秒级或毫秒级，而是精确到小�
 
 ## OpenTSDB体系结构
 
-![](pic/027.png)
+![](../pic/027.png)
 
 * 使用hbase作为存储中心，它无须采样，可以完整的收集和存储上亿的数据点，支持秒级别的数据监控，得益于hbase的分布式列式存储，hbase可以灵活的支持metrics的增加，可以支持上万机器和上亿数据点的采集。
 * TSD是hbase对外通信的daemon程序，没有master/slave之分，也没有共享状态，因此利用这点和hbase集群的特点就可以消除单点。用户可以通过telnet或者http协议直接访问TSD接口，也可以通过rpc访问TSD。

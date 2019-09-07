@@ -6,13 +6,13 @@
 
 ## 架构图
 
-![](pic/028.png)
+![](../pic/028.png)
 
 
 
 ## Demo效果图
 
-![](pic/029.jpg) ![](pic/030.jpg)
+![](../pic/029.jpg) ![](../pic/030.jpg)
 
 ## 步骤概览
 
@@ -272,9 +272,9 @@ inhibit_rules:
 
 #### 测试元锁冲突
 
-![](pic/034.jpg)
+![](../pic/034.jpg)
 
-![](pic/030.jpg)
+![](../pic/030.jpg)
 
 根据告警建议执行sql如下：
 
@@ -293,15 +293,15 @@ Query OK, 0 rows affected (0.01 sec)
 
 此时情报恢复:
 
-![](pic/035.jpg)
+![](../pic/035.jpg)
 
 
 
 #### 测试失败连接数过多
 
-![](pic/032.png)
+![](../pic/032.png)
 
-![](pic/033.jpg)
+![](../pic/033.jpg)
 
 #### 测试行锁冲突
 
@@ -400,17 +400,17 @@ time			host		lock_data	lock_id		lock_index	lock_mode	lock_page	lock_rec	lock_spa
 
 查看告警明细，告警从"pending"到"firing"状态正如配置中"for 3s"所配置的，持续3秒后才会将告警发出。
 
-![](pic/036.png)
+![](../pic/036.png)
 
-![](pic/037.png)
+![](../pic/037.png)
 
 查看钉钉告警，自定义的机器人**延迟了1分钟**才将告警发出。
 
-![](pic/039.png)
+![](../pic/039.png)
 
 告警恢复，钉钉通知如下：
 
-![](pic/038.png)
+![](../pic/038.png)
 
 ####  测试钉钉告警样式
 

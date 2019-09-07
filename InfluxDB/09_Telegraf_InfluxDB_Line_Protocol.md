@@ -36,7 +36,7 @@
 
 Telegraf的Inputs插件exec可以通过额外执行其他脚本的方式来将指标采集至influxdb数据库，原理如下图：
 
-![](pic/042.jpg)
+![](../pic/042.jpg)
 
 
 ## JSON VS INFLUX

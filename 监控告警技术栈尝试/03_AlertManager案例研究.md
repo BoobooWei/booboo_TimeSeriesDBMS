@@ -37,7 +37,7 @@
 
 ## 问题1：未恢复的告警被恢复
 
-![](pic/20190719131410.jpg)
+![](../pic/20190719131410.jpg)
 
 ### 解决方法
 
@@ -148,7 +148,7 @@ inhibit_rules:
 ✔{group="prod",host="xacrdb01",instance="192.168.80.10:9273",job="telegraf",server="xacrdb-10:3306",slave_executed_gtid_set="37d57e64-ee22-11e8-ae5a-001cc4935172:70443-70620:231645-27443480:28835731:28836861:28838414:28841453:28842150:28843451:28843635:28843649:28843679:28843698:28849260:28849309:28849408:28849783:28849811:28849840:28850344, c7e4310f-ee18-11e8-ae1c-00237dce8622:1-115029",slave_last_error="Error 'Table 'xicrm.crm_vip' doesn't exist' on query. Default database: 'xicrm_nnoe_0000'. Query: '/* c0a851d315614589637493868d0054/9.74.69.13.39.18.46.38.34// *//*DRDS /172.20.240.41/efdffecc7800000/ */ALTER TABLE `xicrm`.`crm_vip` MODIFY COLUMN `district` INT(4) NULL COMMENT '区域' AFTER `city`'",slave_last_sql_error="Error 'Table 'xicrm.crm_vip' doesn't exist' on query. Default database: 'xicrm_nnoe_0000'. Query: '/* c0a851d315614589637493868d0054/9.74.69.13.39.18.46.38.34// *//*DRDS /172.20.240.41/efdffecc7800000/ */ALTER TABLE `xicrm`.`crm_vip` MODIFY COLUMN `district` INT(4) NULL COMMENT '区域' AFTER `city`'",slave_last_sql_error_timestamp="190709 16:46:32",slave_master_host="192.168.80.94",slave_master_info_file="mysql.slave_master_info",slave_master_log_file="mysql-bin.000270",slave_master_user="repl",slave_master_uuid="37d57e64-ee22-11e8-ae5a-001cc4935172",slave_relay_log_file="relaylog.000368",slave_relay_master_log_file="mysql-bin.000257",slave_retrieved_gtid_set="37d57e64-ee22-11e8-ae5a-001cc4935172:231645-30657759",slave_slave_io_state="Waiting for master to send event",slave_until_condition="None"}
 ```
 
-![](pic/20190719131804.jpg)
+![](../pic/20190719131804.jpg)
 
 ### 解决过程
 
@@ -313,7 +313,7 @@ groups:
 rate(example_mysql_slave_slave_sql_running[5m]) 持续1分钟 >= 0
 ```
 
-![](pic/20190719132119.jpg)
+![](../pic/20190719132119.jpg)
 
 
 #### 7. 配置AlertManager
@@ -410,7 +410,7 @@ route:
 }
 ```
 
-![](pic/20190719132313.jpg)
+![](../pic/20190719132313.jpg)
 
 #### 9. 是否还存在未恢复的告警被恢复？
 
@@ -428,9 +428,9 @@ route:
 
 #### 11. 再次优化Prometheus标签配置
 
-![](pic/20190722105438.jpg)
+![](../pic/20190722105438.jpg)
 
-![](pic/201907221050.png)
+![](../pic/201907221050.png)
 从采集的主从明细可以看到，除了position会变化外，IO线程同步的主库日志、从库的relay也会变化，因此，可以将相关标签都drop掉。
 
 ```yaml

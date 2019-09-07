@@ -357,13 +357,13 @@ test
 
 ### TICK简介
 
-![](pic/012.png)
+![](../pic/012.png)
 
 TICK是Telegraf、InfluxDB、Chronograf和Kapacitor四个软件的首字母缩写。它是Influxdata公司推出的监控套件，承包指标采集、分析、画图等时序数据库上下游的工作，有点模仿日志分析系统ELK套件的意思。
 
 Influxdata的TICK运维栈主要有开源版本（MIT许可证）、InfluxEnterprise（企业版）和InfluxCloud （AWS云托管）三个版本，开源版本从0.11版本后就不再包括集群服务了，这也是从商业角度考虑的，要想使用集群服务需要购买企业版。开源版和企业版的主要区别就是企业版的InfluxDB和Kapacitor软件支持集群，而开源版不支持，此外企业版提供了先进的备份/恢复功能，而开源版本没有。这是开源软件常见的运作模式，通过代码开源吸引更多的人使用和参与开发，通过增值功能和服务支持获取商业利益。
 
-![](pic/014.jpg)
+![](../pic/014.jpg)
 
 
 **使用Influxdata产品的大公司**
@@ -408,11 +408,11 @@ service kapacitor start
 ```
 可以通过 http://server_ip:8888 访问 chronograf
 
-![](pic/009.jpg)
+![](../pic/009.jpg)
 
 telegraf默认只搜集系统基础指标，如果要搜集其他指标，可根据帮助文档配置即可。
 
-![](pic/015.jpg)
+![](../pic/015.jpg)
 
 ### 1. 安装influxdb 2.0最新版本
 
@@ -428,7 +428,7 @@ telegraf默认只搜集系统基础指标，如果要搜集其他指标，可根
 
 > 2.0版本和1.7版本的变化非常大，2019年5月1日～4日influxdata官网正在维护更新[v2.0.0-alpha.9](https://v2.docs.influxdata.com/v2.0/reference/release-notes/#v2-0-0-alpha-9-2019-05-01)，2.0直接在web界面操作所有产品，很像wavefront；目前在Alpha中，InfluxDB 2将influxdb chronograf kapacitor放在在单个二进制文件中。
 
-![](pic/013.jpg)
+![](../pic/013.jpg)
 
 ### 2. 安装telegraf
 
@@ -440,15 +440,15 @@ yum install -y telegraf
 
 登录influxdb2.0界面选择“设置Settings”中的“telegraf”界面，选择“createconfigration”。
 
-![](pic/024.png)
+![](../pic/024.png)
 
 查看配置明细
 
-![](pic/023.png)
+![](../pic/023.png)
 
 查看启动telegraf的步骤和命令
 
-![](pic/022.png)
+![](../pic/022.png)
 
 telegraf的配置文件是在web中进行管理，创建好后，本地的telegraf通过远程访问配置来启动服务
 
@@ -461,7 +461,7 @@ telegraf --config http://101.132.37.118:9999/api/v2/telegrafs/03cd7af520a78000 &
 
 脚本模式
 
-![](pic/018.jpg)
+![](../pic/018.jpg)
 
 ```sql
 from(bucket: "zhuyun_test")
@@ -474,23 +474,23 @@ from(bucket: "zhuyun_test")
 
 图像化模式
 
-![](pic/017.jpg)
+![](../pic/017.jpg)
 
 ### 4. 可视化数据
 
-![](pic/016.jpg)
+![](../pic/016.jpg)
 
 ### 5. 处理数据
 
 [从数据资源管理器中创建任务](https://v2.docs.influxdata.com/v2.0/process-data/manage-tasks/create-task/#create-a-task-from-the-data-explorer)
 
-![](pic/019.jpg)
+![](../pic/019.jpg)
 
 查看任务代码
 
-![](pic/021.png)
+![](../pic/021.png)
 
-![](pic/020.png)
+![](../pic/020.png)
 
 ### 6. 管理组织
 
