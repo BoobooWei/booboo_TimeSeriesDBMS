@@ -20,8 +20,8 @@
 |A|数据源定义节点|`BatchNode`|顶级节点，定义了：批处理模式|
 |A|数据源定义节点|`StreamNode`|顶级节点，定义了：流处理模式|
 |B|数据定义节点|**定义待处理的数据帧或数据流**||
-|B|数据定义节点|`FromNode`|只能跟着`BatchNode`|
-|B|数据定义节点|`QueryNode`|只能跟着`StreamNode`|
+|B|数据定义节点|`QueryNode`|只能跟着`BatchNode`|
+|B|数据定义节点|`FromNode`|只能跟着`StreamNode`|
 |B|数据定义节点|`SideloadNode`| 基于来自各种源的分层数据向点添加字段和标签 |
 |C|数据操作节点|**更改或生成数据集内的值**||
 |C|数据操作节点|`DefaultNode`|用于为数据系列中的tag和field设置默认值|
@@ -62,3 +62,18 @@
 ## 节点属性方法
 
 [Nodes官方文档](https://docs.influxdata.com/kapacitor/v1.5/nodes/)
+
+### 数据源定义节点
+
+
+### 数据定义节点
+
+
+### 数据操作节点
+
+### 处理节点-用于更改数据结构
+
+### 处理节点-用于转换或处理数据集中数据点
+
+### 处理节点-用于触发事件
+
