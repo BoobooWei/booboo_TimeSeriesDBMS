@@ -176,13 +176,13 @@ $$
 |2|`int(value)`|`int64`|强制将字符串或float64转换为int64|
 |3|`float(value)`|`float64`|制将字符串或int64转换为float64|
 |4|`string(value)`|`string`|将bool，int64或float64转换为字符串|
-|5|`duration(value int64|float64, unit duration)`|`duration`|将int64或float64转换为持续时间|
+|5|`duration(value int64\|float64, unit duration)`|`duration`|将int64或float64转换为持续时间|
 
 ### 判断存在的函数
 
 |No.|函数|返回值|解释|
 |:--|:--|:--|:--|
-|1|`|where(lambda: isPresent("myfield"))`|`True/False`|判断`myfield`是否存在|
+|1|`\|where(lambda: isPresent("myfield"))`|`True/False`|判断`myfield`是否存在|
 
 该函数在`where`节点中使用，根据指定的字段或标记键是否存在返回布尔值。用于过滤数据这是缺少指定的字段或标记。
 
