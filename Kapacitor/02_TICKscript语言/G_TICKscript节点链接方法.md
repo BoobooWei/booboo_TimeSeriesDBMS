@@ -6,10 +6,10 @@
 
 | 节点               | 说明                                                         | 进节点 | 出节点 |
 | ------------------ | ------------------------------------------------------------ | ------ | ------ |
-| BatchNode          | 顶级节点，定义了批数据源                                             | 0      | 3      |
-| StreamNode         | 顶级节点，定义了流数据源                                             | 0      | 3      |
-| FromNode           | 只能跟着BatchNode                                            | 2      | 28     |
-| QueryNode          | 只能跟着StreamNode                                           | 1      | 28     |
+| BatchNode          | 顶级节点，定义了批数据源                                     | 0      | 3      |
+| StreamNode         | 顶级节点，定义了流数据源                                     | 0      | 3      |
+| QueryNode          | 只能跟着BatchNode                                            | 2      | 28     |
+| FromNode           | 只能跟着StreamNode                                           | 1      | 28     |
 | SideloadNode       | 基于来自各种源的分层数据向点添加字段和标签                   | 31     | 29     |
 | DefaultNode        | 用于为数据系列中的tag和field设置默认值                       | 31     | 29     |
 | ShiftNode          | 用于移动数据点时间戳                                         | 31     | 29     |
