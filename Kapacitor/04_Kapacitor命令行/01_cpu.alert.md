@@ -132,9 +132,9 @@ graph LR;
 ```js
 //cpu.tick
 stream
-	|from()
-		.measurement('cpu')
-	|log()
+  |from()
+    .measurement('cpu')
+  |log()
 ```
 
 #### 3. 声明脚本
@@ -332,13 +332,13 @@ dbrp "telegraf"."autogen"
 
 stream
   |from()
-		.measurement('cpu')
+    .measurement('cpu')
   |window()
     .period(10m)
     .every(5m)
   |mean('usage_user')
     .as('mean_usage_user')
-	|log()
+  |log()
 ```
 
 `10 minute` 的时间窗口，每5分钟计算一次5分钟的平均值。
@@ -442,14 +442,14 @@ dbrp "telegraf"."autogen"
 
 stream
   |from()
-		.measurement('cpu')
+    .measurement('cpu')
   |where(lambda: "cpu" == 'cpu-total')
   |window()
     .period(10m)
     .every(5m)
   |mean('usage_user')
     .as('mean_usage_user')
-	|log()
+    |log()
 ```
 
 DAG图
@@ -474,14 +474,14 @@ dbrp "telegraf"."autogen"
 
 stream
   |from()
-		.measurement('cpu')
+    .measurement('cpu')
     .where(lambda: "cpu" == 'cpu-total')
   |window()
     .period(10m)
     .every(5m)
   |mean('usage_user')
     .as('mean_usage_user')
-	|log()
+  |log()
 ```
 
 DAG图
@@ -528,7 +528,7 @@ dbrp "telegraf"."autogen"
 
 stream
   |from()
-		.measurement('cpu')
+    .measurement('cpu')
     .where(lambda: "cpu" == 'cpu-total')
     .groupBy(*)
   |window()
@@ -536,7 +536,7 @@ stream
     .every(5m)
   |mean('usage_user')
     .as('mean_usage_user')
-	|log()
+  |log()
   |alert()
     .crit(lambda: "mean_usage_user" > 80)
     .message('CPU is to high!')
