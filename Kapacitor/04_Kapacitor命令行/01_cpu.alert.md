@@ -1,3 +1,4 @@
+<script src="mermaid.full.min.js"></script>
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [CPU Alert](#cpu-alert)
@@ -120,12 +121,12 @@ cpu,usage_user,float
 
 #### 1. 画出DAG图
 
-```mermaid
+<div class="mermaid">
 graph LR;
   A(StreamNode)-->B
   B(FromNode)-->C
   C(LogNode)
-```
+</div>
 
 #### 2. 编写 TICKscript
 
