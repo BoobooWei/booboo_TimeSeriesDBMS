@@ -1,0 +1,30 @@
+// 测量名
+var measurement string
+// 过滤条件
+var where_filter = lambda: TRUE
+// 分组
+var groups = [*]
+// 时间窗口
+var window duration
+// 执行频率
+var every duration
+// 字段
+var field string
+// 触发告警的表达式
+var crit lambda
+// 告警描述
+var message string
+
+stream
+    |from()
+      .measurement(measurement)
+      .where(where_filter)
+      .groupBy(groups)
+    |window()
+      .period(window)
+      .every(every)
+    |mean(field)
+    |alert()
+      .crit(crit)
+      .stateChangesOnly()
+      .message(message)

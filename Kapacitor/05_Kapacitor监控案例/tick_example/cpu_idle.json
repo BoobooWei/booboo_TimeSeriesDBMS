@@ -1,0 +1,13 @@
+{
+  "template-id": "generic_mean_alert",
+  "dbrps": [{"db": "telegraf", "rp": "autogen"}],
+  "vars": {
+    "measurement": {"type" : "string", "value" : "mem" },
+    "groups": {"type": "list", "value": [{"type":"star", "value":"*"}]},
+    "field": {"type" : "string", "value" : "used_percent" },
+    "warn": {"type" : "lambda", "value" : "\"mean\" > 80.0" },
+    "crit": {"type" : "lambda", "value" : "\"mean\" > 90.0" },
+    "window": {"type" : "duration", "value" : "10m" },
+    "slack_channel": {"type" : "string", "value" : "#alerts_testing" }
+  }
+}

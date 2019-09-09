@@ -1,0 +1,33 @@
+template-id: mean_alert
+dbrps:
+- db: telegraf
+  rp: autogen
+vars:
+  measurement:
+    type: string
+    value: mem
+  groups:
+    type: list
+    value:
+    - type: star
+      value: "*"
+  field:
+    type: string
+    value: used_idle
+  crit:
+    type: lambda
+    value: '"mean" < 10.0'
+  window:
+    type: duration
+    value: 5m
+  every:
+    type: duration
+    value: 1m
+  message:
+    type: string
+    value: '{
+      "type": "cpu_usage",
+      "id": "主机 CPU 使用率大于90%",
+      "host": "{{ index .Tags "host" }}",
+                 "description": "主机{{ index .Tags "host" }} CPU使用率{{ index .Fields "cpu_usage" | printf "%0.2f" }}%,CPU负载过高会导致服务器运行缓慢，应用无法正常使用等问题。请查看CPU使用率高的进程/应用是否为异常导致"
+  }'
