@@ -620,6 +620,19 @@ cpu的指标是1分钟采集一次，告警规则为：
 
 如果使用率超过90%，且持续5分钟，则告警。
 
+```mermaid
+graph LR;
+  A(StreamNode)-->B
+  B(FromNode)-->C
+  C(WindowNode)-->D
+  D(InfluxQLNode)-->E
+  E(EvalNode)-->F
+  F(LogNode)--> G
+  G(AlertNode)
+```
+
+
+
 ```js
 //cpu_alert_stream.tick
 dbrp "telegraf"."autogen"
@@ -639,7 +652,6 @@ stream
     |log()
     |alert()
       .crit(lambda: float("cpu_usage") > 90.0)
-      .durationField('300000') //用于向数据添加警报持续时间。持续时间始终以纳秒为单位
       .stateChangesOnly() //发送状态更改的事件。每个不同的警报级别OK，INFO，WARNING和CRITICAL都被视为不同的状态。
       .message('{                                                                                                 
       "type": "cpu_usage",
@@ -649,7 +661,7 @@ stream
     }')
 ```
 
-Debug 该脚本时，将大于90.0改为0.0，持续时间改为60000
+Debug 该脚本时，将大于90.0改为0.0
 
 ```bash
 [root@tick:/var/lib/kapacitor/task]# kapacitor watch cpu_alert_stream
