@@ -56,7 +56,7 @@
 		- [创建一个生产环境中设定的告警规则](#创建一个生产环境中设定的告警规则)
 
 <!-- /TOC -->
-# CPU Alert
+# 从一个最基本的CPU Alert开始
 
 ## 开始之前
 
@@ -578,9 +578,8 @@ ts=2019-09-08T22:23:10.012+08:00 lvl=error msg="failed to send email" service=sm
 graph LR;
   A(BatchNode)-->B
   B(QueryNode)-->C
-  C(WindowNode)-->D
-  D(InfluxQLNode)-->E
-  E(LogNode)
+  C(InfluxQLNode)-->D
+  D(LogNode)
 ```
 
 #### 2. 编写 TICKscript
