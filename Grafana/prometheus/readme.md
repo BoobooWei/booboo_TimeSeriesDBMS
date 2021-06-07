@@ -37,9 +37,15 @@ docker run -d \
 --restart always \
 -e DATA_SOURCE_NAME="exporter:exporterpassword@(mysql57:3306)/" \
 prom/mysqld-exporter:latest \
---collect.binlog_size 
-
---collect.info_schema.tables
+--collect.binlog_size \
+--collect.engine_innodb_status \
+--collect.global_status \
+--collect.global_variables \
+--collect.info_schema.innodb_metrics \
+--collect.info_schema.processlist \
+--collect.info_schema.query_response_time \
+--collect.info_schema.tables \
+--collect.auto_increment.columns 
 
 
 curl http://localhost:9104/metrics
