@@ -113,13 +113,11 @@ docker run -d \
 
 ## 访问Prometheus web
 
-http://localhost:9090/targets
-
-看到state为 UP 代表已经成功获取mysql的metrics。
-
-
+* 登陆 http://localhost:9090/targets
+* state为 UP 代表已经成功获取mysql的metrics
 
 ## 访问Grafana web
 
-登陆 http://127.0.0.1:3000/ 默认密码 admin/admin
-添加数据源--prometheus
+* 登陆 http://127.0.0.1:3000/ 默认密码 admin/admin
+* 添加数据源--"prometheus-db"
+* 导入grafana模板：[mysql.json](https://github.com/BoobooWei/booboo_TimeSeriesDBMS/blob/master/Grafana/prometheus/mysql.json)
